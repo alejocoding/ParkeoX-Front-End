@@ -1,0 +1,89 @@
+.auth-container {
+  height: 87vh;
+  background: linear-gradient(rgba(11,27,52,0.9), rgba(11,27,52,0.9)),
+              url('/assets/bg.jpg') center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-card {
+  background: rgba(20, 44, 84, 0.9);
+  padding: 40px;
+  border-radius: 12px;
+  width: 320px;
+  color: white;
+  text-align: center;
+  animation: fadeIn 0.6s ease;
+}
+
+.auth-card h2 {
+  margin-bottom: 20px;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid #94a3b8;
+  border-radius: 6px;
+  color: white;
+  outline: none;
+}
+
+.input-group label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #94a3b8;
+  transition: 0.3s;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label {
+  top: -10px;
+  font-size: 12px;
+  color: #22c55e;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 10px;
+  background: #22c55e;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #16a34a;
+  transform: scale(1.03);
+}
+
+.switch {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.switch a {
+  color: #22c55e;
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

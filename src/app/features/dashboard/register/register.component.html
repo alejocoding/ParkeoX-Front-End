@@ -1,0 +1,29 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Crear Cuenta</h2>
+
+    <form (ngSubmit)="register()">
+      <div class="input-group">
+        <input type="text" [(ngModel)]="name" name="name" required />
+        <label>Nombre</label>
+      </div>
+
+      <div class="input-group">
+        <input type="email" [(ngModel)]="email" name="email" required />
+        <label>Correo</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" [(ngModel)]="password" name="password" required />
+        <label>Contraseña</label>
+      </div>
+
+      <button class="btn-primary">Registrarse</button>
+    </form>
+
+    <p class="switch">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login">Inicia sesión</a>
+    </p>
+  </div>
+</div>

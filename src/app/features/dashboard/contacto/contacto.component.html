@@ -1,0 +1,63 @@
+<section class="contact">
+  <div class="contact-container">
+
+    <!-- LADO IZQUIERDO -->
+    <div class="contact-info">
+
+      <h2>Trabajemos juntos 🚀</h2>
+      <p>
+        Desarrollo soluciones modernas enfocadas en eficiencia y experiencia de usuario.
+        Si necesitas un sistema de parqueadero o software personalizado, estoy listo para ayudarte.
+      </p>
+
+      <!-- IMAGEN -->
+
+<div class="image-container">
+  <img src="https://images.unsplash.com/photo-1581090700227-1e8b6c9b7c42" alt="Sistema parqueadero">
+</div>
+
+      <div class="info-box">
+        <i class="fas fa-user"></i>
+        <span>Alejandro Velandia Machado</span>
+      </div>
+
+      <div class="info-box">
+        <i class="fas fa-envelope"></i>
+        <span>{{ 'alejoreyvm@gmail.com' }}</span>
+      </div>
+
+      <div class="info-box">
+        <i class="fas fa-phone"></i>
+        <span>3142822521</span>
+      </div>
+
+    </div>
+
+    <!-- FORMULARIO -->
+    <div class="contact-form">
+      <h2>Envíame un mensaje</h2>
+
+      <form (submit)="sendEmail($event)">
+        <div class="input-group">
+          <input type="text" name="name" required>
+          <label>Nombre</label>
+        </div>
+
+        <div class="input-group">
+          <input type="email" name="email" required>
+          <label>Correo</label>
+        </div>
+
+        <div class="input-group">
+          <textarea name="message" rows="4" required></textarea>
+          <label>Mensaje</label>
+        </div>
+
+        <button class="btn-primary">
+          <i class="fas fa-paper-plane"></i> Enviar mensaje
+        </button>
+      </form>
+    </div>
+
+  </div>
+</section>

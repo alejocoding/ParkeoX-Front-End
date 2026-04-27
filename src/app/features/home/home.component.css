@@ -1,0 +1,151 @@
+* {
+   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+
+
+/* HERO */
+.hero {
+  height: 90vh;
+  background: linear-gradient(rgba(15,23,42,0.8), rgba(15,23,42,0.8)),
+              url('https://images.unsplash.com/photo-1506521781263-d8422e82f27a');
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  padding: 50px;
+  color: white;
+}
+
+.hero-text h2 {
+  font-size: 3rem;
+}
+
+.hero-text p {
+  margin: 20px 0;
+}
+
+/* BOTONES */
+.btn-primary {
+  background: #22c55e;
+  border: none;
+  padding: 12px 25px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-login {
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 8px 15px;
+  color: white;
+  cursor: pointer;
+}
+.btn-login:hover {
+  background: white;
+  color: #0f172a;
+  scale: 1.05;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: white;
+}
+
+/* SERVICES */
+.services {
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+}
+
+.cards {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 30px;
+  width: 260px;
+  transition: 0.4s;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.card i {
+  font-size: 40px;
+  color: #22c55e;
+  margin-bottom: 15px;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* BENEFITS SLIDER */
+.benefits {
+  padding: 80px 20px;
+  background: #0b1b34;
+  color: white;
+  text-align: center;
+}
+
+.slider {
+  position: relative;
+  max-width: 400px;
+  margin: auto;
+}
+
+.slide {
+  display: none;
+  animation: fade 0.6s ease;
+}
+
+.slide.active {
+  display: block;
+}
+
+.slide i {
+  font-size: 50px;
+  color: #22c55e;
+  margin-bottom: 20px;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* CTA */
+.cta {
+  padding: 60px;
+  display:grid;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  background: #0f172a;
+  color: white;
+}
+
+

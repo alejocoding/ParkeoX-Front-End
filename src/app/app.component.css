@@ -1,0 +1,69 @@
+.login-container {
+  height: 100vh;
+  background: linear-gradient(rgba(15,23,42,0.9), rgba(15,23,42,0.9)),
+              url('https://images.unsplash.com/photo-1506521781263-d8422e82f27a');
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  background: white;
+  padding: 40px;
+  width: 350px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.login-card h2 {
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.login-card p {
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #0f172a;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cbd5f5;
+  border-radius: 5px;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: #facc15;
+}
+
+/* BOTÓN */
+.btn-primary {
+  width: 100%;
+  margin-top: 15px;
+  background: #facc15;
+  border: none;
+  padding: 12px;
+  color: #0f172a;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #eab308;
+}
