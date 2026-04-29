@@ -1,29 +1,75 @@
-<div class="auth-container">
-  <div class="auth-card">
-    <h2>Crear Cuenta</h2>
+<section class="auth">
 
-    <form (ngSubmit)="register()">
-      <div class="input-group">
-        <input type="text" [(ngModel)]="name" name="name" required />
-        <label>Nombre</label>
+  <div class="auth-container">
+
+    <!-- IZQUIERDA (DISEÑO IGUAL) -->
+    <div class="auth-left">
+      <a href="/"><h1 class="logo">Parke<span>OX</span></h1></a>
+
+      <p class="tag">CREA TU CUENTA</p>
+
+      <h2>
+        Empieza a gestionar tu parqueadero
+        <span>hoy mismo.</span>
+      </h2>
+
+      <p class="desc">
+        Únete a usuarios que ya optimizan su parqueadero con tecnología inteligente.
+      </p>
+
+      <div class="icons">
+        <img src="assets/img/carro.png" width="50px" alt="">
+        <img src="assets/img/barras.png" width="50px" alt="">
+        <img src="assets/img/verdadero.png" width="50px" alt="">
       </div>
 
-      <div class="input-group">
-        <input type="email" [(ngModel)]="email" name="email" required />
-        <label>Correo</label>
-      </div>
+      <img src="assets/img/hombrePC.png" class="hero-img">
+    </div>
 
-      <div class="input-group">
-        <input type="password" [(ngModel)]="password" name="password" required />
-        <label>Contraseña</label>
-      </div>
+    <!-- DERECHA (FORMULARIO) -->
+    <div class="auth-right">
 
-      <button class="btn-primary">Registrarse</button>
-    </form>
+      <h2>Crear cuenta</h2>
+      <p class="sub">Completa tus datos</p>
 
-    <p class="switch">
-      ¿Ya tienes cuenta?
-      <a routerLink="/login">Inicia sesión</a>
-    </p>
+      <form (ngSubmit)="register()">
+
+        <div class="input-group">
+          <i class="fas fa-id-card"></i>
+          <input type="text" [(ngModel)]="cedula" name="cedula" placeholder="Cédula" required>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" [(ngModel)]="name" name="name" placeholder="Nombre completo" required>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-phone"></i>
+          <input type="text" [(ngModel)]="telefono" name="telefono" placeholder="Teléfono" required>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" [(ngModel)]="email" name="email" placeholder="Correo electrónico" required>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" [(ngModel)]="password" name="password" placeholder="Contraseña" required>
+        </div>
+
+        <button class="btn-primary">Crear cuenta</button>
+
+        <p class="switch">
+          ¿Ya tienes cuenta?
+          <a routerLink="/login">Inicia sesión</a>
+        </p>
+
+      </form>
+
+    </div>
+
   </div>
-</div>
+
+</section>

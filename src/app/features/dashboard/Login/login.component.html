@@ -1,24 +1,73 @@
-<div class="auth-container">
-  <div class="auth-card">
-    <h2>Iniciar Sesión</h2>
+<section class="auth">
 
-    <form (ngSubmit)="login()">
-      <div class="input-group">
-        <input type="email" [(ngModel)]="email" name="email" required />
-        <label>Correo</label>
+  <div class="auth-container">
+
+    <!-- IZQUIERDA -->
+    <div class="auth-left">
+      <h1 class="logo">Parke<span>OX</span></h1>
+
+      <p class="tag">BIENVENIDO</p>
+
+      <h2>
+        Gestiona tu parqueadero con
+        <span>tecnología inteligente.</span>
+      </h2>
+
+      <p class="desc">
+        Optimiza ingresos, salidas y disponibilidad en tiempo real.
+      </p>
+
+      <div class="icons">
+        <img src="assets/img/carro.png" width="50px" alt="">
+        <img src="assets/img/barras.png" width="50px" alt="">
+        <img src="assets/img/verdadero.png" width="50px" alt="">
       </div>
 
-      <div class="input-group">
-        <input type="password" [(ngModel)]="password" name="password" required />
-        <label>Contraseña</label>
-      </div>
+      <img src="assets/img/hombrePC.png" class="hero-img">
+    </div>
 
-      <button class="btn-primary">Ingresar</button>
-    </form>
+    <!-- DERECHA -->
+    <div class="auth-right">
 
-    <p class="switch">
-      ¿No tienes cuenta?
-      <a routerLink="/register">Regístrate</a>
-    </p>
+      <h2>Iniciar sesión</h2>
+      <p class="sub">Ingresa tus credenciales</p>
+
+      <form>
+
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Correo electrónico">
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Contraseña">
+        </div>
+
+        <div class="options">
+          <label>
+            <input type="checkbox"> Recordarme
+          </label>
+          <a href="#">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button class="btn-primary">Ingresar</button>
+
+        <div class="divider">o</div>
+
+        <div class="social">
+          <button class="btn-social">Google</button>
+          <button class="btn-social">Microsoft</button>
+        </div>
+
+        <p class="switch">
+          ¿No tienes cuenta?
+          <a routerLink="/register">Regístrate</a>
+        </p>
+
+      </form>
+    </div>
+
   </div>
-</div>
+
+</section>

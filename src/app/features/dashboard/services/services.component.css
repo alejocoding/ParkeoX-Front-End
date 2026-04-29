@@ -1,13 +1,14 @@
 /* GLOBAL */
+
+*{
+  font-family: 'Poppins', sans-serif;
+}
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   background: #f8fafc;
   color: #0f172a;
 }
 
-h1, h2, h3 {
-  font-family: 'Poppins', sans-serif;
-}
 
 .section-title {
   font-size: 2.2rem;

@@ -1,89 +1,210 @@
-.auth-container {
-  height: 87vh;
-  background: linear-gradient(rgba(11,27,52,0.9), rgba(11,27,52,0.9)),
-              url('/assets/bg.jpg') center/cover;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+a{
+  text-decoration: none;
+}
+
+.auth {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e1b4b);
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Poppins', sans-serif;
 }
 
-.auth-card {
-  background: rgba(20, 44, 84, 0.9);
+.auth-container {
+  width: 950px;
+  height: 600px;
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+}
+
+/* IZQUIERDA */
+.auth-left {
+  flex: 1;
+  background: linear-gradient(135deg, #1e1b4b, #312e81);
+  color: white;
   padding: 40px;
-  border-radius: 12px;
-  width: 320px;
-  color: white;
-  text-align: center;
-  animation: fadeIn 0.6s ease;
-}
-
-.auth-card h2 {
-  margin-bottom: 20px;
-}
-
-.input-group {
   position: relative;
-  margin-bottom: 20px;
 }
 
-.input-group input {
-  width: 100%;
-  padding: 10px;
-  background: transparent;
-  border: 1px solid #94a3b8;
-  border-radius: 6px;
-  color: white;
-  outline: none;
+.logo {
+  font-size: 22px;
 }
 
-.input-group label {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  color: #94a3b8;
-  transition: 0.3s;
+.logo span {
+  color: #22c55e;
 }
 
-.input-group input:focus + label,
-.input-group input:valid + label {
-  top: -10px;
+.tag {
+  margin-top: 20px;
   font-size: 12px;
   color: #22c55e;
 }
 
-.btn-primary {
-  width: 100%;
-  padding: 10px;
-  background: #22c55e;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
+.auth-left h2 {
+  margin-top: 20px;
+  font-size: 26px;
 }
 
-.btn-primary:hover {
-  background: #16a34a;
-  transform: scale(1.03);
+.auth-left h2 span {
+  color: #22c55e;
 }
 
-.switch {
+.desc {
   margin-top: 15px;
   font-size: 14px;
+  color: #cbd5f5;
 }
 
-.switch a {
-  color: #22c55e;
+.icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.icon {
+  width: 45px;
+  height: 45px;
+  background: #4338ca;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.icon.green {
+  background: #22c55e;
+}
+
+.hero-img {
+  position: absolute;
+  bottom: 0;
+  left: 30px;
+  width: 220px;
+}
+
+/* DERECHA */
+.auth-right {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-right h2 {
+  font-size: 24px;
+}
+
+.sub {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+/* INPUTS */
+.input-group {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.input-group i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: gray;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 12px 12px 35px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  outline: none;
+}
+
+/* OPTIONS */
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.options a {
+  color: #4f46e5;
   text-decoration: none;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+/* BOTON */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+/* DIVIDER */
+.divider {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 12px;
+  color: gray;
+}
+
+/* SOCIAL */
+.social {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-social {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  cursor: pointer;
+}
+
+/* SWITCH */
+.switch {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 15px;
+}
+
+.switch a {
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+/* 🔥 RESPONSIVE */
+@media (max-width: 900px) {
+  .auth-container {
+    flex-direction: column;
+    height: auto;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .auth-left {
+    display: none; /* estilo moderno mobile */
+  }
+
+  .auth-right {
+    padding: 30px;
   }
 }

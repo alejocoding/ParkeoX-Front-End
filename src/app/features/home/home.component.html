@@ -1,67 +1,156 @@
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <section class="hero">
-  <div class="hero-text">
-    <h2>Gestión Inteligente de Parqueaderos</h2>
-    <p>Controla el ingreso, salida y disponibilidad en tiempo real.</p>
-    <button class="btn-primary" routerLink="/login">Comenzar</button>
+
+  <div class="hero-content">
+
+    <div class="hero-text">
+      <span class="tag">BIENVENIDO A PARKEOX</span>
+      <br><br>
+      <div>
+        <h1 class="grande">
+          Gestiona tu parqueadero con tecnología inteligente
+        </h1>
+      </div>
+
+      <p >
+        Optimiza el control de ingresos, salidas y disponibilidad en tiempo real.
+        Más seguridad, más eficiencia.
+      </p>
+
+      <div class="buttons">
+        <button class="btn-primary" routerLink="/login">Comenzar ahora</button>
+        <button class="btn-outline">Ver demostración</button>
+      </div>
+    </div>
+      <img class="hero-img" src="assets/img/hombrePC.png"/>
+
   </div>
+
+  <!-- CARDS -->
+
 </section>
 
+<section class="cards-section">
+    <div class="hero-cards">
 
-
-<section class="services">
-  <h2 class="section-title">Nuestros Servicios</h2>
-
-  <div class="cards">
     <div class="card">
-      <i class="fas fa-car"></i>
-      <h3>Control de ingreso</h3>
-      <p>Registro automatizado de vehículos en tiempo real.</p>
+      <img src="assets/img/carro.png" alt="">
+      <h3>Control de Accesos</h3>
+      <p class="gris">Registra y gestiona el ingreso y salida de vehículos en tiempo real de forma automatica.</p>
+      <p><a href=""> Saber más -></a></p>
     </div>
 
     <div class="card">
-      <i class="fas fa-chart-line"></i>
-      <h3>Reportes inteligentes</h3>
-      <p>Estadísticas detalladas para toma de decisiones.</p>
+      <img src="assets/img/barras.png" alt="">
+      <h3>Reportes Inteligentes</h3>
+      <p class="gris">Obten estadisticas detalladas y reportes personalizables  para tomar mejores decisiones</p>
+      <p><a href=""> Saber más -></a></p>
     </div>
 
     <div class="card">
-      <i class="fas fa-shield-alt"></i>
-      <h3>Seguridad avanzada</h3>
-      <p>Control total de accesos y monitoreo continuo.</p>
+      <img src="assets/img/verdadero.png" alt="">
+      <h3>Seguridad Avanzada</h3>
+      <p class="gris">Monitorea tu parqueadero controles avanzados y accesos seguros en todo momento.</p>
+      <p><a href=""> Saber más -></a></p>
     </div>
+
   </div>
-</section>
 
-<!-- SLIDER BENEFICIOS -->
-<section class="benefits">
-  <h2 class="section-title">¿Por qué elegirnos?</h2>
+</section>
+<!-- LOGOS -->
+<section class="brands">
+  <p>Vehiculos de todo tipo</p>
 
   <div class="slider">
-    <div class="slide active">
-      <i class="fas fa-clock"></i>
-      <h3>Tiempo real</h3>
-      <p>Monitorea disponibilidad al instante.</p>
-    </div>
+    <div class="slide-track">
 
-    <div class="slide">
-      <i class="fas fa-plug"></i>
-      <h3>Integración fácil</h3>
-      <p>Compatible con múltiples sistemas.</p>
-    </div>
+      <!-- BLOQUE ORIGINAL -->
+      <div class="slide"><img src="https://label-magazine.com/images/article/2021/03-marzec-march/Renault_logo.png"></div>
+      <div class="slide"><img src="https://i.pinimg.com/originals/aa/b6/75/aab675730c0bc457859f6e01b3d5ac6d.png"></div>
+      <div class="slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/1280px-BMW.svg.png"></div>
+      <div class="slide"><img src="https://i.pinimg.com/originals/14/eb/e3/14ebe3da0146023a6038c176e6a7a9c6.png"></div>
+      <div class="slide"><img src="https://logos-world.net/wp-content/uploads/2021/03/Chevrolet-Logo.png"></div>
 
-    <div class="slide">
-      <i class="fas fa-laptop-code"></i>
-      <h3>Interfaz moderna</h3>
-      <p>Diseño intuitivo y fácil de usar.</p>
+      <!-- DUPLICADO -->
+      <div class="slide"><img src="https://label-magazine.com/images/article/2021/03-marzec-march/Renault_logo.png"></div>
+      <div class="slide"><img src="https://i.pinimg.com/originals/aa/b6/75/aab675730c0bc457859f6e01b3d5ac6d.png"></div>
+      <div class="slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/1280px-BMW.svg.png"></div>
+      <div class="slide"><img src="https://i.pinimg.com/originals/14/eb/e3/14ebe3da0146023a6038c176e6a7a9c6.png"></div>
+      <div class="slide"><img src="https://logos-world.net/wp-content/uploads/2021/03/Chevrolet-Logo.png"></div>
+
     </div>
   </div>
 </section>
 
-<section class="cta">
-  <h2>Empieza hoy mismo</h2>
-  <button class="btn-primary" routerLink="/login" style="max-width: 200px;">Ir al sistema</button>
+<!-- ABOUT -->
+<section class="about">
+
+  <div class="about-container">
+
+    <div class="about-text">
+      <h2>Todo lo que necesitas para gestionar tu parqueadero</h2>
+
+      <p>
+        ParkeOX te permite tener el control total desde cualquier lugar.
+      </p>
+
+      <ul>
+        <li>✔ Control en tiempo real</li>
+        <li>✔ Acceso desde cualquier dispositivo</li>
+        <li>✔ Notificaciones inteligentes</li>
+      </ul>
+
+      <button class="btn-primary">Visitar sistema</button>
+    </div>
+
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" />
+    </div>
+
+  </div>
+
+  <!-- FEATURES -->
+  <div class="features">
+
+    <div class="feature">
+      <h4>Oficina Remota</h4>
+      <p>Gestiona tu parqueadero desde cualquier lugar.</p>
+    </div>
+
+    <div class="feature active">
+      <h4>Estación Virtual</h4>
+      <p>Accede al sistema de forma segura.</p>
+    </div>
+
+    <div class="feature">
+      <h4>Servidor en la nube</h4>
+      <p>Disponibilidad 24/7 garantizada.</p>
+    </div>
+
+  </div>
+
 </section>
 
+<!-- STATS -->
+<section class="stats">
+
+  <div class="stat">
+    <h3>+5,000</h3>
+    <p>Vehículos diarios</p>
+  </div>
+
+  <div class="stat">
+    <h3>98%</h3>
+    <p>Disponibilidad</p>
+  </div>
+
+  <div class="stat">
+    <h3>+1,200</h3>
+    <p>Clientes</p>
+  </div>
+
+  <div class="stat">
+    <h3>100%</h3>
+    <p>Seguridad</p>
+  </div>
+
+</section>

@@ -7,10 +7,13 @@ import { RouterModule } from '@angular/router';
   imports: [FormsModule, RouterModule],
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: '../login/login.component.css'
+  styleUrl: '../Login/login.component.css'
 })
 export class RegisterComponent {
+
+  cedula: string = '';
   name: string = '';
+  telefono: string = '';
   email: string = '';
   password: string = '';
 
