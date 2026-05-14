@@ -1,0 +1,53 @@
+<div class="tickets-page">
+
+  <div class="top-bar">
+
+    <div>
+      <h1>Tickets</h1>
+      <p>Tickets activos del parqueadero</p>
+    </div>
+
+    <button class="btn-create" (click)="openModal()">
+      + Crear ticket
+    </button>
+
+  </div>
+
+  <div class="ticket-grid">
+
+    <div class="ticket-card" *ngFor="let ticket of tickets">
+
+      <div class="ticket-header">
+
+        <h3>#{{ ticket.id }}</h3>
+
+        <span class="status">
+          {{ ticket.status?.status }}
+        </span>
+
+      </div>
+
+      <div class="ticket-body">
+
+        <p><strong>Vehículo:</strong> {{ ticket.vehicle?.plate }}</p>
+
+        <p><strong>Ingreso:</strong> {{ ticket.checkInAt }}</p>
+
+        <p><strong>Total:</strong> ${{ ticket.total }}</p>
+
+      </div>
+
+      <button class="btn-view">
+        Ver ticket
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<app-ticket-modal
+  *ngIf="showModal"
+  (close)="closeModal()">
+</app-ticket-modal>

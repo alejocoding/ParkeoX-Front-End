@@ -4,7 +4,9 @@
 
     <!-- IZQUIERDA -->
     <div class="auth-left">
-      <h1 class="logo">Parke<span>OX</span></h1>
+      <a href="">
+        <h1 class="logo">Parke<span>OX</span></h1>
+      </a>
 
       <p class="tag">BIENVENIDO</p>
 
@@ -32,16 +34,16 @@
       <h2>Iniciar sesión</h2>
       <p class="sub">Ingresa tus credenciales</p>
 
-      <form>
+      <form (ngSubmit)="login()">
 
         <div class="input-group">
           <i class="fas fa-envelope"></i>
-          <input type="email" placeholder="Correo electrónico">
+          <input type="email" placeholder="Correo electrónico" [(ngModel)]="email" name="email">
         </div>
 
         <div class="input-group">
           <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Contraseña">
+          <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password">
         </div>
 
         <div class="options">
@@ -49,16 +51,11 @@
             <input type="checkbox"> Recordarme
           </label>
           <a href="#">¿Olvidaste tu contraseña?</a>
+
         </div>
 
-        <button class="btn-primary">Ingresar</button>
+        <button type="submit" (click)="login()" class="btn-primary">Ingresar</button>
 
-        <div class="divider">o</div>
-
-        <div class="social">
-          <button class="btn-social">Google</button>
-          <button class="btn-social">Microsoft</button>
-        </div>
 
         <p class="switch">
           ¿No tienes cuenta?

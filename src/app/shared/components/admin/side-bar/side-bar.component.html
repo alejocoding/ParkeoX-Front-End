@@ -1,0 +1,67 @@
+<!-- LIBERIAS ADICIONALESK -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+  <!-- LOGO -->
+  <div>
+
+    <div class="logo">
+      <div class="logo-icon">OX</div>
+      <span>PARKEOX</span>
+    </div>
+
+    <!-- MENU -->
+    <nav class="menu">
+
+      <a routerLink="/admin/dashboard" class="menu-item active">
+        <i class="fas fa-th-large"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a routerLink="/transactions" class="menu-item">
+        <i class="fas fa-wallet"></i>
+        <span>Cuentas</span>
+      </a>
+
+      <a routerLink="/admin/tickets" class="menu-item">
+        <i class="fas fa-credit-card"></i>
+        <span>Tickets</span>
+      </a>
+
+      <a routerLink="/goals" class="menu-item">
+        <i class="fas fa-bullseye"></i>
+        <span>Personal</span>
+      </a>
+      <a routerLink="/settings" class="menu-item">
+        <i class="fas fa-cog"></i>
+        <span>Licencia</span>
+      </a>
+      <a routerLink="/settings" class="menu-item">
+        <i class="fas fa-circle-question"></i>
+        <span>Reportes</span>
+      </a>
+
+
+    </nav>
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="sidebar-bottom">
+
+    <a routerLink="/help" class="menu-item">
+      <i class="fas fa-cog"></i>
+      <span>Settings</span>
+    </a>
+
+    <a (click)="logout()" class="menu-item">
+      <i class="fas fa-right-from-bracket"></i>
+      <span>Log out</span>
+    </a>
+
+
+  </div>
+
+</aside>
