@@ -8,7 +8,7 @@ import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
   standalone: true,
   imports: [CommonModule, TicketModalComponent],
   templateUrl: './tickets.component.html',
-  styleUrl: './tickets.component.css'
+  styleUrls: ['./tickets.component.css']
 })
 export class TicketsComponent implements OnInit {
 
@@ -28,7 +28,10 @@ export class TicketsComponent implements OnInit {
 
     this.ticketService.getTickets().subscribe({
       next:(data)=>{
+        console.log("Tickets: ", data);
         this.tickets = data;
+      },error:(error)=>{
+        console.error("Error fetching tickets: ", error);
       }
     });
 

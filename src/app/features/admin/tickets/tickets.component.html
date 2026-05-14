@@ -1,45 +1,122 @@
 <div class="tickets-page">
 
+  <!-- TOP BAR -->
+
   <div class="top-bar">
 
-    <div>
-      <h1>Tickets</h1>
-      <p>Tickets activos del parqueadero</p>
+    <div class="title-section">
+      <h1>
+        <i class="fa-solid fa-ticket"></i>
+        Tickets
+      </h1>
+
+      <p>
+        Gestiona los tickets activos del parqueadero
+      </p>
     </div>
 
     <button class="btn-create" (click)="openModal()">
-      + Crear ticket
+      <i class="fa-solid fa-plus"></i>
+      Crear ticket
     </button>
 
   </div>
+
+  <!-- GRID -->
 
   <div class="ticket-grid">
 
     <div class="ticket-card" *ngFor="let ticket of tickets">
 
+      <!-- GLOW -->
+
+      <div class="card-glow"></div>
+
+      <!-- HEADER -->
+
       <div class="ticket-header">
 
-        <h3>#{{ ticket.id }}</h3>
+        <div>
 
+          <h3>
+            <i class="fa-solid fa-receipt"></i>
+            #{{ ticket.id }}
+          </h3>
+
+          <small>
+            Ticket generado
+          </small>
+
+        </div>
+
+        <button class="status">
+          <i class="fa-solid fa-print"></i>
+        </button>
         <span class="status">
-          {{ ticket.status?.status }}
+          <i class="fa-solid fa-circle-check"></i>
+          {{ ticket.status }}
         </span>
 
       </div>
 
+      <!-- BODY -->
+
       <div class="ticket-body">
 
-        <p><strong>Vehículo:</strong> {{ ticket.vehicle?.plate }}</p>
+        <div class="ticket-info">
 
-        <p><strong>Ingreso:</strong> {{ ticket.checkInAt }}</p>
+          <div class="icon-box">
+            <i class="fa-solid fa-car-side"></i>
+          </div>
 
-        <p><strong>Total:</strong> ${{ ticket.total }}</p>
+          <div>
+            <span>Vehículo</span>
+            <p>{{ ticket.vehicle }}</p>
+          </div>
+
+        </div>
+
+        <div class="ticket-info">
+
+          <div class="icon-box purple">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+
+          <div>
+            <span>Ingreso</span>
+            <p>{{ ticket.checkInAt | date:'dd/MM/yyyy HH:mm' }}</p>
+          </div>
+
+        </div>
+
+        <div class="ticket-info">
+
+          <div class="icon-box green">
+            <i class="fa-solid fa-dollar-sign"></i>
+          </div>
+
+          <div>
+            <span>Total</span>
+            <p>${{ ticket.total }}</p>
+          </div>
+
+        </div>
 
       </div>
 
-      <button class="btn-view">
-        Ver ticket
-      </button>
+      <!-- FOOTER -->
+      <div >
+
+        <button class="btn-view">
+          <i class="fa-solid fa-pen-to-square"></i>
+          Modificar ticket
+        </button>
+        <button class="btn-view">
+          <i class="fa-solid fa-eye"></i>
+          Ver ticket
+        </button>
+
+      </div>
 
     </div>
 

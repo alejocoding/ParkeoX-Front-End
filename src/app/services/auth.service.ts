@@ -41,6 +41,13 @@ export class AuthService {
 
     return payload?.nombre ?? null;
   }
+   // Obtener compañia
+  getcompany(): string | null {
+
+    const payload = this.getPayload();
+
+    return payload?.company ?? null;
+  }
 
   logout(): void {
     Swal.fire({

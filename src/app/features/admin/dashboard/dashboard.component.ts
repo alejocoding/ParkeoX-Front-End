@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
+import { DashboardService } from './service/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,15 +13,31 @@ export class DashboardComponent {
 
   nombre: string | null = '';
   token: string  | null = '';
+  company: any = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
 
     this.nombre = this.authService.getNombre();
     this.token = this.authService.getToken();
+    this.dashboardService.getCompany().subscribe({
 
+    next:(data)=>{
 
+      console.log(data);
+
+      this.company = data[0];
+
+    },
+
+    error:(err)=>{
+
+      console.error(err);
+
+    }
+
+  });
 
   }
 }

@@ -26,11 +26,11 @@ export class TicketModalComponent {
   calcularTotal(): void {
 
     if(this.tariff == 1){
-      this.total = 5000;
+      this.total = 2200;
     }
 
     if(this.tariff == 2){
-      this.total = 10000;
+      this.total = 4000;
     }
 
   }

@@ -1,63 +1,243 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
 <div class="modal-overlay">
 
   <div class="modal">
 
+    <!-- HEADER -->
+
     <div class="modal-header">
 
-      <h2>Crear Ticket</h2>
+      <div class="header-info">
 
-      <button (click)="closeModal()">X</button>
+        <div class="header-icon">
+          <i class="fa-solid fa-ticket"></i>
+        </div>
 
-    </div>
+        <div>
 
-    <div class="form-group">
+          <h2>Crear Ticket</h2>
 
-      <label>Placa</label>
+          <p>Registra el ingreso de un vehículo al parqueadero</p>
 
-      <input type="text" [(ngModel)]="plate">
+        </div>
 
-    </div>
+      </div>
 
-    <div class="form-group">
+      <button class="btn-close" (click)="closeModal()">
 
-      <label>Tarifa</label>
+        <i class="fa-solid fa-xmark"></i>
 
-      <select [(ngModel)]="tariff" (change)="calcularTotal()">
-
-        <option value="1">Carro</option>
-
-        <option value="2">Moto</option>
-
-      </select>
+      </button>
 
     </div>
 
-    <div class="form-group">
+    <!-- BODY -->
 
-      <label>Hora entrada</label>
+    <div class="modal-body">
 
-      <input type="text" [value]="today | date:'short'" disabled>
+      <!-- LEFT SIDE -->
+
+      <div class="left-section">
+
+        <div class="form-grid">
+
+          <!-- PLACA -->
+
+          <div class="form-group full">
+
+            <label>
+
+              <i class="fa-solid fa-car-side"></i>
+
+              Placa del vehículo
+
+            </label>
+
+            <input
+              type="text"
+              [(ngModel)]="plate"
+              placeholder="Ej: KCL-425">
+
+          </div>
+
+          <!-- VEHICULO -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fa-solid fa-car"></i>
+
+              Tipo vehículo
+
+            </label>
+
+            <select [(ngModel)]="tariff" (change)="calcularTotal()">
+
+              <option value="1">🚗 Carro</option>
+
+              <option value="2">🏍️ Moto</option>
+
+            </select>
+
+          </div>
+
+          <!-- TOTAL -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fa-solid fa-wallet"></i>
+
+              Tariffa minima
+
+            </label>
+
+            <input
+              type="text"
+              [value]="total | currency:'COP ':'symbol':'1.0-0'"
+              disabled>
+
+          </div>
+
+          <!-- ENTRADA -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fa-solid fa-clock"></i>
+
+              Hora entrada
+
+            </label>
+
+            <input
+              type="text"
+              [value]="today | date:'dd/MM/yyyy HH:mm'"
+              disabled>
+
+          </div>
+
+          <!-- SALIDA -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fa-solid fa-right-from-bracket"></i>
+
+              Hora salida
+
+            </label>
+
+            <input type="datetime-local">
+
+          </div>
+
+        </div>
+
+        <!-- BUTTON -->
+
+        <button class="btn-save" (click)="saveTicket()">
+
+          <i class="fa-solid fa-floppy-disk"></i>
+
+          Guardar Ticket
+
+        </button>
+
+      </div>
+
+      <!-- RIGHT SIDE -->
+
+      <div class="right-section">
+
+        <div class="ticket-card">
+
+          <!-- TOP -->
+
+          <div class="ticket-top">
+
+            <div>
+
+              <span class="ticket-label">
+                Ticket Preview
+              </span>
+
+              <h3>
+                {{ plate || '--- ---' }}
+              </h3>
+
+            </div>
+
+            <div class="ticket-status">
+
+              <i class="fa-solid fa-circle"></i>
+
+              Activo
+
+            </div>
+
+          </div>
+
+          <!-- MIDDLE -->
+
+          <div class="ticket-middle">
+
+            <div class="ticket-item">
+
+              <span>Vehículo</span>
+
+              <strong>
+                {{ tariff == 1 ? 'Carro' : 'Moto' }}
+              </strong>
+
+            </div>
+
+            <div class="ticket-item">
+
+              <span>Ingreso</span>
+
+              <strong>
+                {{ today | date:'shortTime' }}
+              </strong>
+
+            </div>
+
+            <div class="ticket-item">
+
+              <span>Estado</span>
+
+              <strong>
+                Activo
+              </strong>
+
+            </div>
+
+          </div>
+
+          <!-- BOTTOM -->
+
+          <div class="ticket-bottom">
+
+            <span>Total a pagar</span>
+
+            <h1>
+
+              {{ total | currency:'COP ':'symbol':'1.0-0' }}
+
+            </h1>
+
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
-    <div class="form-group">
-
-      <label>Hora salida</label>
-
-      <input type="datetime-local">
-
-    </div>
-
-    <div class="form-group">
-
-      <label>Total</label>
-
-      <input type="text" [value]="total" disabled>
-
-    </div>
-
-    <button class="btn-save" (click)="saveTicket()">
-      Guardar ticket
-    </button>
 
   </div>
 
