@@ -2,8 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TicketService } from '../service/ticket.service';
-
-
+import { TariffsService } from '../../../../services/tariffs.service';
 @Component({
   selector: 'app-ticket-modal',
   standalone: true,
@@ -21,9 +20,22 @@ export class TicketModalComponent {
 
   total:number = 0;
 
-  constructor(private ticketService: TicketService){}
+  constructor(private ticketService: TicketService, private tariffsService: TariffsService){}
 
+
+  ngOnInit(): void {
+
+    this.tariffsService.getTariffsByCompany(sessionStorage.getItem('company') || '').subscribe({
+     next:(data)=>{
+       console.log("Tarifas: ", data);
+      },error:(error)=>{
+        console.error("Error fetching tariffs: ", error);
+      }
+    });
+  }
   calcularTotal(): void {
+    console.log("sesion storage" , sessionStorage)
+    console.log(localStorage);
 
     if(this.tariff == 1){
       this.total = 2200;
@@ -46,6 +58,8 @@ export class TicketModalComponent {
       checkInAt: new Date()
 
     };
+
+
 
     this.ticketService.createTicket(ticket)
       .subscribe({

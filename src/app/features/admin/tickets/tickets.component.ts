@@ -22,6 +22,7 @@ export class TicketsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTickets();
+
   }
 
   loadTickets(): void {
