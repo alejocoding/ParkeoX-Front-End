@@ -556,4 +556,7 @@
     font-size:32px;
   }
 
+  .swal-front {
+  z-index: 999999 !important;
+}
 }

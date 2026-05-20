@@ -70,11 +70,11 @@
 
             </label>
 
-            <select [(ngModel)]="tariff" (change)="calcularTotal()">
+            <select [(ngModel)]="selectedVehicleType" (change)="calcularTotal()">
 
-              <option value="1">🚗 Carro</option>
+              <option value="Particular">🚗 Particular</option>
 
-              <option value="2">🏍️ Moto</option>
+              <option value="Motocicleta">🏍️ Motocicleta</option>
 
             </select>
 
@@ -86,7 +86,7 @@
             <label>
 
               <i class="fa-solid fa-wallet"></i>
-              Tariffa minima
+              Tariffa
 
             </label>
 
@@ -110,21 +110,6 @@
 
           </div>
 
-          <!-- SALIDA -->
-
-          <div class="form-group">
-
-            <label>
-
-              <i class="fa-solid fa-right-from-bracket"></i>
-
-              Hora salida
-
-            </label>
-
-            <input type="datetime-local">
-
-          </div>
 
         </div>
 

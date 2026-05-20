@@ -8,12 +8,14 @@ import { Observable } from 'rxjs';
 })
 export class DashboardService {
 
- private api = 'http://localhost:8080/basics/company';
+ private api = 'http://localhost:8080/basics/company/unique';
 
   constructor(private http: HttpClient) {}
 
-  getCompany(): Observable<any[]> {
-    return this.http.get<any[]>(this.api);
+  getCompany(companyId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.api}/${companyId}`);
   }
+
+
 
 }

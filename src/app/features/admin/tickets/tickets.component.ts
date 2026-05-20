@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TicketService } from './service/ticket.service';
 import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [CommonModule, TicketModalComponent],
+  imports: [CommonModule, TicketModalComponent, FormsModule],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
 })
@@ -16,6 +17,7 @@ export class TicketsComponent implements OnInit {
 
   showModal:boolean = false;
   today: Date = new Date();
+  searchPlate: string = '';
 
   selectedTicket:any = null;
   constructor(private ticketService: TicketService) {}
@@ -46,4 +48,18 @@ export class TicketsComponent implements OnInit {
     this.showModal = false;
   }
 
+
+  get filteredTickets() {
+
+  if (!this.searchPlate) {
+    return this.tickets;
+  }
+
+  return this.tickets.filter((ticket: any) =>
+    ticket.vehicle
+      ?.toLowerCase()
+      .includes(this.searchPlate.toLowerCase())
+  );
+
+}
 }
