@@ -1,7 +1,54 @@
+.modal-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
 .ticket-print{
-  width:300px;
-  background:white;
-  padding:20px;
-  border:2px dashed #999;
-  font-family:monospace;
+  width: 340px;
+  background: white;
+  box-shadow: 0 30px 80px rgba(0,0,0,.18);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn{
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.btn-print{
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.ticket-form{
+  display: flex;
+  flex-direction: column;
+  gap:5px;
+}
+.ticket-form>label{
+  font-weight: light;
+  color:gray  ;
+}
+
+.ticket-form>input{
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }

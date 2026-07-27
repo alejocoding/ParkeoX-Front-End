@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 export class TicketModalComponent {
 
   @Output() close = new EventEmitter<void>();
+  @Output() ticketSaved = new EventEmitter<void>();
 
   plate: string = '';
   today: Date = new Date();
@@ -101,13 +102,17 @@ export class TicketModalComponent {
 
           alert("Ticket creado");
 
+          this.ticketSaved.emit();
           this.closeModal();
+
 
         },
         error: (err) => {
           console.error(err);
         }
       });
+
+
 
   }
 
