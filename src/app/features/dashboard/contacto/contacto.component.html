@@ -1,40 +1,70 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- HERO -->
+<section class="contact-hero">
+  <span class="contact-tag">CONTÁCTANOS</span>
+  <h1>Hablemos de tu proyecto</h1>
+  <p>¿Tienes una idea o necesitas un sistema a medida? Escríbeme y lo hacemos realidad.</p>
+</section>
+
+<!-- CONTACTO -->
 <section class="contact">
   <div class="contact-container">
 
     <!-- LADO IZQUIERDO -->
     <div class="contact-info">
 
-
-      <h2>Trabajemos juntos 🚀</h2>
+      <h2>Trabajemos juntos <span class="wave">🚀</span></h2>
       <p>
         Desarrollo soluciones modernas enfocadas en eficiencia y experiencia de usuario.
         Si necesitas un sistema de parqueadero o software personalizado, estoy listo para ayudarte.
       </p>
 
-      <div>
-        <h3>Datos </h3>
-        <ul>
-          <li>Alejandro Velandia Machado</li>
-          <li>{{ 'alejoreyvm@gmail.com' }}</li>
-          <li> +57 3142822521</li>
-        </ul>
+      <div class="info-list">
+
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-user"></i></div>
+          <div class="info-text">
+            <span class="info-label">Nombre</span>
+            <span class="info-value">Alejandro Velandia Machado</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-envelope"></i></div>
+          <div class="info-text">
+            <span class="info-label">Correo</span>
+            <span class="info-value">alejoreyvm&#64;gmail.com</span>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-phone"></i></div>
+          <div class="info-text">
+            <span class="info-label">Teléfono</span>
+            <span class="info-value">+57 314 282 2521</span>
+          </div>
+        </div>
+
       </div>
 
       <!-- IMAGEN -->
-
       <div class="image-container">
-        <img src="https://www.elcarrocolombiano.com/wp-content/uploads/2024/05/20240506Parqueaderoautomatizado02.jpg"
+        <img
+          src="https://www.elcarrocolombiano.com/wp-content/uploads/2024/05/20240506Parqueaderoautomatizado02.jpg"
           alt="Sistema parqueadero">
       </div>
-
 
     </div>
 
     <!-- FORMULARIO -->
     <div class="contact-form">
-      <h2>Envíame un mensaje</h2>
 
-      <form (submit)="sendEmail($event)">
+      <h2>Envíame un mensaje</h2>
+      <p class="form-subtitle">Cuéntame qué necesitas y te responderé lo antes posible.</p>
+
+      <form>
+
         <div class="input-group">
           <input type="text" name="name" required>
           <label>Nombre</label>
@@ -50,10 +80,13 @@
           <label>Mensaje</label>
         </div>
 
-        <button class="btn-primary">
-          <i class="fas fa-paper-plane"></i> Enviar mensaje
+        <button type="submit" class="btn-primary">
+          <i class="fas fa-paper-plane"></i>
+          Enviar mensaje
         </button>
+
       </form>
+
     </div>
 
   </div>

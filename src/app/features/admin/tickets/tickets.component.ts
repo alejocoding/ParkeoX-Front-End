@@ -4,6 +4,7 @@ import { TicketService } from './service/ticket.service';
 import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
 import { FormsModule } from '@angular/forms';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tickets',
@@ -64,6 +65,40 @@ export class TicketsComponent implements OnInit {
   closeEditModal(): void {
     this.showEditModal = false;
     this.selectedTicket = null;
+  }
+
+  deleteTicket(ticket: any): void {
+    Swal.fire({
+      icon: 'warning',
+      title: '¿Eliminar ticket?',
+      text: `Esta acción eliminará el ticket de ${ticket.vehicle?.toUpperCase()} de forma permanente.`,
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#dc2626'
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+
+      this.ticketService.deleteTicket(ticket.id).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Ticket eliminado',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          this.loadTickets();
+        },
+        error: (err) => {
+          const msg = err.status === 403
+            ? 'Sin permisos para eliminar. Verifica que tu sesión esté activa.'
+            : err.status === 404
+            ? 'Ticket no encontrado en el servidor.'
+            : 'No se pudo eliminar el ticket. Intenta de nuevo.';
+          Swal.fire({ icon: 'error', title: `Error ${err.status}`, text: msg });
+        }
+      });
+    });
   }
 
   // Imprime directamente sin abrir el modal de edición

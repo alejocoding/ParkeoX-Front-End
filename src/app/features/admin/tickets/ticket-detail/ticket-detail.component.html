@@ -53,8 +53,7 @@
           <div class="form-group">
             <label><i class="fa-solid fa-circle-check"></i> Estado</label>
             <select [(ngModel)]="editedStatus">
-              <option [value]="1">Activo</option>
-              <option [value]="0">Cerrado</option>
+              <option *ngFor="let s of statusOptions" [value]="s.id">{{ s.status }}</option>
             </select>
           </div>
 
@@ -91,9 +90,9 @@
               <i class="fa-solid fa-square-parking"></i>
               PARKEOX
             </div>
-            <span class="preview-badge" [class.badge-active]="editedStatus == 1" [class.badge-closed]="editedStatus == 0">
+            <span class="preview-badge" [class.badge-active]="!isClosedStatus" [class.badge-closed]="isClosedStatus">
               <i class="fa-solid fa-circle"></i>
-              {{ editedStatus == 1 ? 'Activo' : 'Cerrado' }}
+              {{ selectedStatusName }}
             </span>
           </div>
 
@@ -153,7 +152,7 @@
       <span>Salida</span>
       <strong>{{ editedCheckOut ? (editedCheckOut | date:'dd/MM/yyyy HH:mm') : '---' }}</strong>
     </div>
-    <div class="receipt-row"><span>Estado</span><strong>{{ editedStatus == 1 ? 'Activo' : 'Cerrado' }}</strong></div>
+    <div class="receipt-row"><span>Estado</span><strong>{{ selectedStatusName }}</strong></div>
   </div>
 
   <div class="receipt-dashes">· · · · · · · · · · · · · · · · · · · · ·</div>

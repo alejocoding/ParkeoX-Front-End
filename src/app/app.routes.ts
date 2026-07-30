@@ -2,6 +2,9 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './features/dashboard/Login/login.component';
 import { HomeComponent } from './features/home/home.component';
 import { RegisterComponent } from './features/dashboard/register/register.component';
+import { ForgotPasswordComponent } from './features/dashboard/recover-password/forgot-password/forgot-password.component';
+import { VerifyCodeComponent } from './features/dashboard/recover-password/verify-code/verify-code.component';
+import { ResetPasswordComponent } from './features/dashboard/recover-password/reset-password/reset-password.component';
 import { ServicesComponent } from './features/dashboard/services/services.component';
 import { ContactComponent } from './features/dashboard/contacto/contacto.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
@@ -41,6 +44,21 @@ export const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent
+      },
+
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent
+      },
+
+      {
+        path: 'verify-code',
+        component: VerifyCodeComponent
+      },
+
+      {
+        path: 'reset-password',
+        component: ResetPasswordComponent
       }
     ]
   },

@@ -77,19 +77,23 @@
           </td>
 
           <td>
-            <span class="status" [class.active]="ticket.status === 1" [class.closed]="ticket.status !== 1">
-              {{ ticket.status === 1 ? 'Activo' : 'Cerrado' }}
+            <span class="status" [class.active]="ticket.status?.toLowerCase() !== 'cerrado'" [class.closed]="ticket.status?.toLowerCase() === 'cerrado'">
+              {{ ticket.status }}
             </span>
           </td>
 
           <td class="actions">
 
-            <button class="btn-action" title="Imprimir" (click)="printDirectly(ticket)">
-              <i class="fa-solid fa-print"></i>
-            </button>
 
             <button class="btn-action edit" title="Editar" (click)="openEditModal(ticket)">
               <i class="fa-solid fa-pen"></i>
+            </button>
+
+            <button class="btn-action delete" title="Eliminar" (click)="deleteTicket(ticket)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+            <button class="btn-action" title="Imprimir" (click)="printDirectly(ticket)">
+              <i class="fa-solid fa-print"></i>
             </button>
 
           </td>
@@ -132,7 +136,7 @@
     </div>
     <div class="receipt-row">
       <span>Estado</span>
-      <strong>{{ ticketToPrint.status === 1 ? 'Activo' : 'Cerrado' }}</strong>
+      <strong>{{ ticketToPrint.status }}</strong>
     </div>
   </div>
 
@@ -153,7 +157,8 @@
 <app-ticket-modal
   *ngIf="showModal"
   (close)="closeModal()"
-  (ticketSaved)="onTicketSaved()">
+  (ticketSaved)="onTicketSaved()"
+  (ticketUpdated)="onTicketUpdated()">
 </app-ticket-modal>
 
 <app-ticket-detail

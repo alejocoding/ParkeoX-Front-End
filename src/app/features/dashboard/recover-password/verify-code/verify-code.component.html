@@ -1,0 +1,81 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<section class="auth">
+
+  <div class="auth-container">
+
+    <!-- IZQUIERDA -->
+    <div class="auth-left">
+      <a href="/">
+        <h1 class="logo">Parke<span>OX</span></h1>
+      </a>
+
+      <p class="tag">RECUPERA TU ACCESO</p>
+
+      <h2>
+        Revisa tu correo,
+        <span>casi lo logras.</span>
+      </h2>
+
+      <p class="desc">
+        Ingresa el código de verificación que enviamos a tu correo electrónico.
+      </p>
+
+      <div class="icons">
+        <img src="assets/img/carro.png" width="50px" alt="">
+        <img src="assets/img/barras.png" width="50px" alt="">
+        <img src="assets/img/verdadero.png" width="50px" alt="">
+      </div>
+
+      <img src="assets/img/hombrePC.png" class="hero-img">
+    </div>
+
+    <!-- DERECHA -->
+    <div class="auth-right">
+
+      <div class="step-indicator">
+        <div class="step done">
+          <span class="step-circle"><i class="fas fa-check"></i></span>
+          <span class="step-label">Correo</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step active">
+          <span class="step-circle">2</span>
+          <span class="step-label">Código</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <span class="step-circle">3</span>
+          <span class="step-label">Nueva clave</span>
+        </div>
+      </div>
+
+      <h2>Verifica tu código</h2>
+      <p class="sub">Ingresa el código de 6 dígitos que enviamos a tu correo</p>
+
+      <form>
+
+        <div class="input-group">
+          <i class="fas fa-key"></i>
+          <input type="text" placeholder="Código de verificación" [(ngModel)]="code" name="code" maxlength="6">
+        </div>
+
+        <p class="resend">
+          ¿No recibiste el código?
+          <a routerLink="/forgot-password">Reenviar</a>
+        </p>
+
+        <button type="button" class="btn-primary" routerLink="/reset-password">
+          Verificar código
+        </button>
+
+        <p class="switch">
+          <a routerLink="/login"><i class="fas fa-arrow-left"></i> Volver a iniciar sesión</a>
+        </p>
+
+      </form>
+    </div>
+
+  </div>
+
+</section>

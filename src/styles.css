@@ -2,3 +2,114 @@
 body{
   margin: 0;
 }
+
+/* =========================
+   ESTILOS DE IMPRESIÓN DE TICKET
+   (deben ser globales: @media print necesita ocultar TODO el documento,
+   no solo lo renderizado por el componente ticket-detail)
+========================= */
+
+@media print {
+
+  body * {
+    visibility: hidden;
+  }
+
+  .print-receipt,
+  .print-receipt * {
+    visibility: visible;
+  }
+
+  .print-receipt {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    font-family: 'Courier New', monospace;
+    background: white;
+    padding: 20px;
+    color: #000;
+  }
+
+  .receipt-brand {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .receipt-brand i {
+    font-size: 26px;
+    color: #7c3aed;
+  }
+
+  .receipt-brand h1 {
+    font-size: 22px;
+    font-weight: 900;
+    margin: 4px 0;
+    letter-spacing: 2px;
+  }
+
+  .receipt-brand p {
+    font-size: 11px;
+    color: #555;
+    margin: 0;
+  }
+
+  .receipt-dashes {
+    text-align: center;
+    font-size: 10px;
+    color: #aaa;
+    margin: 10px 0;
+    letter-spacing: 1px;
+  }
+
+  .receipt-rows {
+    margin-bottom: 8px;
+  }
+
+  .receipt-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 5px 0;
+    border-bottom: 1px dashed #eee;
+  }
+
+  .receipt-row span { color: #555; }
+  .receipt-row strong { font-weight: 700; }
+
+  .receipt-total {
+    text-align: center;
+    margin-top: 14px;
+  }
+
+  .receipt-total span {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #555;
+    display: block;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .receipt-total h2 {
+    font-size: 28px;
+    font-weight: 900;
+    margin: 0;
+  }
+
+  .receipt-thanks {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 11px;
+    color: #555;
+  }
+
+  .receipt-thanks small {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+    color: #999;
+  }
+}

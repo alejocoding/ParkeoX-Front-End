@@ -1,0 +1,235 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+a {
+  text-decoration: none;
+}
+
+.auth {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e1b4b);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.auth-container {
+  width: 950px;
+  height: 600px;
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* IZQUIERDA */
+.auth-left {
+  flex: 1;
+  background: linear-gradient(135deg, #1e1b4b, #312e81);
+  color: white;
+  padding: 40px;
+  position: relative;
+}
+
+.logo {
+  font-size: 22px;
+  color: white;
+}
+
+.logo span {
+  color: #22c55e;
+}
+
+.tag {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #22c55e;
+}
+
+.auth-left h2 {
+  margin-top: 20px;
+  font-size: 26px;
+}
+
+.auth-left h2 span {
+  color: #22c55e;
+}
+
+.desc {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #cbd5f5;
+}
+
+.icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.hero-img {
+  position: absolute;
+  bottom: 0;
+  left: 30px;
+  width: 220px;
+}
+
+/* DERECHA */
+.auth-right {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-right h2 {
+  font-size: 24px;
+}
+
+.sub {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+/* STEP INDICATOR */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.step-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  transition: .3s ease;
+}
+
+.step-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+
+.step.active .step-circle {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+}
+
+.step.active .step-label {
+  color: #16a34a;
+}
+
+.step.done .step-circle {
+  background: #16a34a;
+  color: white;
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin: 0 8px 18px;
+}
+
+/* INPUTS */
+.input-group {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.input-group i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: gray;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 12px 12px 35px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  outline: none;
+  letter-spacing: 3px;
+}
+
+/* REENVIAR */
+.resend {
+  font-size: 12px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.resend a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* BOTON */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+/* SWITCH */
+.switch {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 15px;
+}
+
+.switch a {
+  color: #4f46e5;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .auth-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .auth-left {
+    display: none;
+  }
+
+  .auth-right {
+    padding: 30px;
+  }
+}

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TicketService } from '../service/ticket.service';
+import { StatusService } from '../../../../services/status.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -21,16 +22,37 @@ export class TicketDetailComponent implements OnInit {
   editedCheckOut: string = '';
   editedStatus: number = 1;
   editedTotal: number = 0;
+  statusOptions: any[] = [];
 
-  constructor(private ticketService: TicketService) {}
+  constructor(
+    private ticketService: TicketService,
+    private statusService: StatusService
+  ) {}
 
   ngOnInit(): void {
     this.editedPlate = this.ticket?.vehicle ?? '';
     this.editedCheckOut = this.ticket?.checkOutAt
       ? this.toDatetimeLocal(this.ticket.checkOutAt)
       : '';
-    this.editedStatus = this.ticket?.status ?? 1;
+    this.editedStatus = this.ticket?.statusId ?? 1;
     this.editedTotal = this.ticket?.total ?? 0;
+
+    this.statusService.getStatus().subscribe({
+      next: (data) => {
+        this.statusOptions = data;
+      },
+      error: () => {
+        Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudieron cargar los estados' });
+      }
+    });
+  }
+
+  get selectedStatusName(): string {
+    return this.statusOptions.find(s => s.id === this.editedStatus)?.status ?? '';
+  }
+
+  get isClosedStatus(): boolean {
+    return this.selectedStatusName.toLowerCase() === 'cerrado';
   }
 
   private toDatetimeLocal(dateStr: string): string {
@@ -51,7 +73,7 @@ export class TicketDetailComponent implements OnInit {
       checkOutAt: this.editedCheckOut ? new Date(this.editedCheckOut).toISOString() : null,
       status: this.editedStatus,
       total: this.editedTotal,
-      tariff: this.ticket.tariff,
+      tariff: this.ticket.tariffId,
     };
 
     this.ticketService.updateTicket(this.ticket.id, updated).subscribe({

@@ -330,6 +330,16 @@ tbody tr:hover {
   background: #1d4ed8;
 }
 
+.delete {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.delete:hover {
+  background: #dc2626;
+  color: white;
+}
+
 /* EMPTY ROW */
 
 .empty-row {

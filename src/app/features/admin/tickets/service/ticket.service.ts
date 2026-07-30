@@ -23,4 +23,8 @@ export class TicketService {
     return this.http.put(`${this.api}/${id}`, ticket);
   }
 
+  deleteTicket(id: number): Observable<any> {
+    return this.http.delete(`${this.api}/${id}`);
+  }
+
 }
