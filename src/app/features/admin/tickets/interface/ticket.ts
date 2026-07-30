@@ -1,17 +1,10 @@
 export interface Ticket {
-
   id?: number;
-
-  vehicle: number;
-
+  vehicle: string;
   tariff: number;
-
   status: number;
-
   total: number;
-
   checkInAt: string;
-
-  checkOutAt?: string;
-
+  checkOutAt?: string | null;
+  email?: string;
 }

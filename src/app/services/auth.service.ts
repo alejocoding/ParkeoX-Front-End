@@ -49,6 +49,14 @@ export class AuthService {
     return payload?.company ?? null;
   }
 
+  // Obtener email
+  getEmail(): string | null {
+
+    const payload = this.getPayload();
+
+    return payload?.email ?? payload?.sub ?? null;
+  }
+
   logout(): void {
     Swal.fire({
       icon: 'success',

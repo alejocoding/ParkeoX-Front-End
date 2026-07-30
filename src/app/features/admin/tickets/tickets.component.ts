@@ -4,6 +4,7 @@ import { TicketService } from './service/ticket.service';
 import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
 import { FormsModule } from '@angular/forms';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
+
 @Component({
   selector: 'app-tickets',
   standalone: true,
@@ -14,35 +15,35 @@ import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 export class TicketsComponent implements OnInit {
 
   tickets: any[] = [];
-
   showModal: boolean = false;
-  today: Date = new Date();
   searchPlate: string = '';
   showEditModal: boolean = false;
   selectedTicket: any = null;
+  ticketToPrint: any = null;
 
-
-  constructor(private ticketService: TicketService) { }
+  constructor(private ticketService: TicketService) {}
 
   ngOnInit(): void {
     this.loadTickets();
-
   }
 
   loadTickets(): void {
-
     this.ticketService.getTickets().subscribe({
       next: (data) => {
-        console.log("Tickets: ", data);
         this.tickets = data;
-      }, error: (error) => {
-        console.error("Error fetching tickets: ", error);
+      },
+      error: (error) => {
+        console.error('Error al cargar tickets:', error);
       }
     });
-
   }
+
   onTicketSaved(): void {
     this.closeModal();
+    this.loadTickets();
+  }
+
+  onTicketUpdated(): void {
     this.loadTickets();
   }
 
@@ -54,11 +55,10 @@ export class TicketsComponent implements OnInit {
     this.showModal = false;
   }
 
-
-  editModal(ticket: any): void {
+  openEditModal(ticket: any): void {
+    console.log('Ticket seleccionado para editar:', ticket);
     this.selectedTicket = ticket;
     this.showEditModal = true;
-    console.log("Selected Ticket: ", this.selectedTicket);
   }
 
   closeEditModal(): void {
@@ -66,17 +66,21 @@ export class TicketsComponent implements OnInit {
     this.selectedTicket = null;
   }
 
-  get filteredTickets() {
+  // Imprime directamente sin abrir el modal de edición
+  printDirectly(ticket: any): void {
+    this.ticketToPrint = ticket;
+    setTimeout(() => {
+      window.print();
+      this.ticketToPrint = null;
+    }, 150);
+  }
 
+  get filteredTickets() {
     if (!this.searchPlate) {
       return this.tickets;
     }
-
     return this.tickets.filter((ticket: any) =>
-      ticket.vehicle
-        ?.toLowerCase()
-        .includes(this.searchPlate.toLowerCase())
+      ticket.vehicle?.toLowerCase().includes(this.searchPlate.toLowerCase())
     );
-
   }
 }

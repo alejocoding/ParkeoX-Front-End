@@ -15,19 +15,14 @@
         </div>
 
         <div>
-
           <h2>Crear Ticket</h2>
-
           <p>Registra el ingreso de un vehículo al parqueadero</p>
-
         </div>
 
       </div>
 
       <button class="btn-close" (click)="closeModal()">
-
         <i class="fa-solid fa-xmark"></i>
-
       </button>
 
     </div>
@@ -47,47 +42,38 @@
           <div class="form-group full">
 
             <label>
-
               <i class="fa-solid fa-car-side"></i>
-
               Placa del vehículo
-
             </label>
 
             <input type="text" [(ngModel)]="plate" placeholder="Ej: KCL-425" style="text-transform: uppercase;">
 
           </div>
 
-          <!-- VEHICULO -->
+          <!-- TIPO DE VEHÍCULO -->
 
           <div class="form-group">
 
             <label>
-
               <i class="fa-solid fa-car"></i>
-
               Tipo vehículo
-
             </label>
 
             <select [(ngModel)]="selectedVehicleType" (change)="calcularTotal()">
-
+              <option value="" disabled selected>Seleccionar...</option>
               <option value="Particular">🚗 Particular</option>
-
               <option value="Motocicleta">🏍️ Motocicleta</option>
-
             </select>
 
           </div>
 
+          <!-- TARIFA -->
 
           <div class="form-group">
 
             <label>
-
               <i class="fa-solid fa-wallet"></i>
-              Tariffa
-
+              Tarifa
             </label>
 
             <input type="text" [value]="total | currency:'COP ':'symbol':'1.0-0'" disabled>
@@ -99,111 +85,67 @@
           <div class="form-group">
 
             <label>
-
               <i class="fa-solid fa-clock"></i>
-
               Hora entrada
-
             </label>
 
             <input type="text" [value]="today | date:'dd/MM/yyyy HH:mm'" disabled>
 
           </div>
 
-
         </div>
 
         <!-- BUTTON -->
 
         <button class="btn-save" (click)="saveTicket()">
-
           <i class="fa-solid fa-floppy-disk"></i>
-
           Guardar Ticket
-
         </button>
 
       </div>
 
-      °<!-- RIGHT SIDE
+      <!-- RIGHT SIDE — Preview -->
 
       <div class="right-section">
 
         <div class="ticket-card">
 
-
-
           <div class="ticket-top">
 
             <div>
-
-              <span class="ticket-label">
-                Ticket Preview
-              </span>
-
-              <h3>
-                {{ plate || '--- ---' }}
-              </h3>
-
+              <span class="ticket-label">Vista previa</span>
+              <h3 style="text-transform: uppercase;">{{ plate || '--- ---' }}</h3>
             </div>
 
             <div class="ticket-status">
-
               <i class="fa-solid fa-circle"></i>
-
               Activo
-
             </div>
 
           </div>
-
-
 
           <div class="ticket-middle">
 
             <div class="ticket-item">
-
               <span>Vehículo</span>
-
-              <strong>
-                {{ tariff == 1 ? 'Carro' : 'Moto' }}
-              </strong>
-
+              <strong>{{ selectedVehicleType || '---' }}</strong>
             </div>
 
             <div class="ticket-item">
-
               <span>Ingreso</span>
-
-              <strong>
-                {{ today | date:'shortTime' }}
-              </strong>
-
+              <strong>{{ today | date:'HH:mm' }}</strong>
             </div>
 
             <div class="ticket-item">
-
               <span>Estado</span>
-
-              <strong>
-                Activo
-              </strong>
-
+              <strong>Activo</strong>
             </div>
 
           </div>
 
-
           <div class="ticket-bottom">
-
             <span>Total a pagar</span>
-
-            <h1>
-
-              {{ total | currency:'COP ':'symbol':'1.0-0' }}
-
-            </h1>
-
+            <h1>{{ total | currency:'COP ':'symbol':'1.0-0' }}</h1>
           </div>
 
         </div>
@@ -211,7 +153,6 @@
       </div>
 
     </div>
-    -->
 
   </div>
 
