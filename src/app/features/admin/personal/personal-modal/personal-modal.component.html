@@ -1,0 +1,164 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<div class="modal-overlay">
+
+  <div class="modal">
+
+    <!-- HEADER -->
+
+    <div class="modal-header">
+
+      <div class="header-info">
+
+        <div class="header-icon">
+          <i class="fa-solid fa-user-plus"></i>
+        </div>
+
+        <div>
+          <h2>Nuevo integrante</h2>
+          <p>Crea un usuario o administrador para tu compañía</p>
+        </div>
+
+      </div>
+
+      <button class="btn-close" (click)="closeModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+    <!-- BODY -->
+
+    <div class="modal-body">
+
+      <!-- LEFT SIDE -->
+
+      <div class="left-section">
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label>
+              <i class="fa-solid fa-id-card"></i>
+              Cédula
+            </label>
+            <input type="text" [(ngModel)]="cedula" placeholder="Ej: 1032456789">
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fa-solid fa-user"></i>
+              Nombre completo
+            </label>
+            <input type="text" [(ngModel)]="name" placeholder="Ej: Laura Gómez">
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fa-solid fa-phone"></i>
+              Teléfono
+            </label>
+            <input type="text" [(ngModel)]="telefono" placeholder="Ej: 3001234567">
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fa-solid fa-user-shield"></i>
+              Rol
+            </label>
+            <select [(ngModel)]="roleId">
+              <option [ngValue]="null" disabled selected>Seleccionar...</option>
+              <option *ngFor="let r of roles" [ngValue]="r.id">{{ r.rol }}</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label>
+              <i class="fa-solid fa-envelope"></i>
+              Correo electrónico
+            </label>
+            <input type="email" [(ngModel)]="email" placeholder="Ej: laura@empresa.com">
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fa-solid fa-lock"></i>
+              Contraseña
+            </label>
+            <input type="password" [(ngModel)]="password" placeholder="Mínimo 6 caracteres">
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fa-solid fa-building"></i>
+              Compañía
+            </label>
+            <input type="text" [value]="companyName" disabled>
+          </div>
+
+        </div>
+
+        <!-- BUTTON -->
+
+        <button class="btn-save" [disabled]="guardando" (click)="guardar()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          {{ guardando ? 'Guardando...' : 'Crear integrante' }}
+        </button>
+
+      </div>
+
+      <!-- RIGHT SIDE — Preview -->
+
+      <div class="right-section">
+
+        <div class="staff-card">
+
+          <div class="staff-top">
+
+            <div class="staff-avatar">
+              <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div class="staff-status">
+              <i class="fa-solid fa-circle"></i>
+              Activo
+            </div>
+
+          </div>
+
+          <h3>{{ name || 'Nombre del integrante' }}</h3>
+          <span class="staff-role">{{ roleLabel }}</span>
+
+          <div class="staff-middle">
+
+            <div class="staff-item">
+              <span>Correo</span>
+              <strong>{{ email || '---' }}</strong>
+            </div>
+
+            <div class="staff-item">
+              <span>Teléfono</span>
+              <strong>{{ telefono || '---' }}</strong>
+            </div>
+
+            <div class="staff-item">
+              <span>Cédula</span>
+              <strong>{{ cedula || '---' }}</strong>
+            </div>
+
+          </div>
+
+          <div class="staff-bottom">
+            <span>Compañía</span>
+            <h2>{{ companyName || '---' }}</h2>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

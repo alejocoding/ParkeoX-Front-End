@@ -8,7 +8,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const publicRoutes = [
 
     '/auth/login',
-    '/auth/register'
+    '/auth/register',
+    '/auth/forgot-password',
+    '/auth/verify-code',
+    '/auth/reset-password'
 
   ];
   // Verifica si la request es pública

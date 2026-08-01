@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { Roles } from '../../../core/constants/roles';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -43,11 +44,12 @@ export class LoginComponent {
 
         switch (rol) {
 
-          case 'SUPERADMIN':
+          case Roles.SUPERADMIN:
+          case Roles.ADMIN:
             this.router.navigate(['/admin/dashboard']);
             break;
 
-          case 'USER':
+          case Roles.USER:
             this.router.navigate(['/home']);
             break;
 
@@ -74,6 +76,13 @@ export class LoginComponent {
             text: 'No se pudo conectar con el servidor'
           });
 
+        }
+        else if (error.status === 403) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Acceso restringido',
+            text: error.error?.message || 'Licencia vencida. Por favor contáctate al 314 282 2521 para renovarla.'
+          });
         }
         else {
           Swal.fire({

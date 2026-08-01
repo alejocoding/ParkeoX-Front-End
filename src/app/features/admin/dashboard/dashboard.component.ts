@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { DashboardService } from './service/dashboard.service';
+import { CompanyService } from '../../../services/company.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +16,7 @@ export class DashboardComponent {
   company: any = null;
   nit: any = null;
 
-  constructor(private authService: AuthService, private dashboardService: DashboardService) {}
+  constructor(private authService: AuthService, private companyService: CompanyService) {}
 
   ngOnInit(): void {
 
@@ -29,7 +29,7 @@ export class DashboardComponent {
     // GLOBAL VARIABLE
     sessionStorage.setItem('company', this.nit ?? 'Sin compañía');
 
-    this.dashboardService.getCompany(this.nit).subscribe({
+    this.companyService.getCompany(this.nit).subscribe({
       next:(data:any)=>{
         console.log(data);
 

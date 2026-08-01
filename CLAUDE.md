@@ -25,10 +25,10 @@ There is no linter configured. The build defaults to the `production` configurat
 **Layout-based routing** (`src/app/app.routes.ts`). Three layout components wrap child routes:
 - `PublicLayoutComponent` — `''`, `services`, `contact` (marketing/public pages)
 - `AuthLayoutComponent` — `login`, `register`
-- `AdminLayoutComponent` — `admin/*` (`dashboard`, `tickets`), protected by `authGuard` with `data: { role: 'SUPERADMIN' }`
+- `AdminLayoutComponent` — `admin/*` (`dashboard`, `tickets`, `personal`), protected by `authGuard` with `data: { role: 'ADMIN' }`
 
 **Auth is JWT-in-localStorage.** No refresh flow.
-- Login (`features/dashboard/Login/login.component.ts`) POSTs to `/auth/login`, stores the returned `token` via `AuthService.saveToken`, then routes by role (`SUPERADMIN` → `/admin/dashboard`, `USER` → `/home`).
+- Login (`features/dashboard/Login/login.component.ts`) POSTs to `/auth/login`, stores the returned `token` via `AuthService.saveToken`, then routes by role (`ADMIN` → `/admin/dashboard`, `USER` → `/home`). A `SUPERADMIN` role does not exist yet — only `ADMIN` and `USER` are wired up.
 - `AuthService` (`services/auth.service.ts`) decodes the JWT payload client-side with `atob` — read role via `getRol()` (checks both `rol` and `role` claims), plus `getNombre()`, `getcompany()`.
 - `authGuard` (`guards/auth.guard.ts`) checks `isAuthenticated()` and matches the route's `data.role`; redirects to `/login` on failure.
 - `authInterceptor` (`interceptors/auth.interceptor.ts`) attaches `Authorization: Bearer <token>` to every request **except** paths containing `/auth/login` or `/auth/register`.
@@ -38,7 +38,7 @@ There is no linter configured. The build defaults to the `production` configurat
 - `/basics/*` — users, company (`/basics/company/unique/:id`), tariffs (`/basics/tariff`)
 - `/advanced/*` — tickets (`/advanced/ticket`)
 
-Services and models are colocated per feature (e.g. `features/admin/tickets/service/`, `.../interface/`) except the shared ones under `src/app/services/`. Most service methods and models are typed as `any`.
+All services live in `src/app/services/` — there is no per-feature `service/` colocation. Interfaces/models still colocate per feature (e.g. `features/admin/tickets/interface/`). Most service methods and models are typed as `any`.
 
 **User feedback** uses SweetAlert2 (`Swal.fire`) directly in components/services rather than a wrapper.
 

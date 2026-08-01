@@ -1,0 +1,116 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="settings-page">
+
+  <!-- HEADER -->
+
+  <div class="settings-header">
+    <div>
+      <h1>
+        <i class="fa-solid fa-gear"></i>
+        Configuración
+      </h1>
+      <p>Administra tu perfil y los datos de tu compañía</p>
+    </div>
+  </div>
+
+  <div class="settings-grid">
+
+    <!-- PERFIL -->
+
+    <div class="settings-card">
+
+      <div class="card-header">
+        <div class="card-icon"><i class="fa-solid fa-user"></i></div>
+        <div>
+          <h2>Mi perfil</h2>
+          <p>Solo puedes editar tu nombre</p>
+        </div>
+      </div>
+
+      <ng-container *ngIf="!cargandoPerfil; else loadingPerfil">
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-user"></i> Nombre completo</label>
+          <input type="text" [(ngModel)]="userName" placeholder="Tu nombre completo">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-envelope"></i> Correo electrónico</label>
+          <input type="text" [value]="userEmail" disabled>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-user-shield"></i> Rol</label>
+          <input type="text" [value]="userRole" disabled>
+        </div>
+
+        <button class="btn-save" [disabled]="guardandoPerfil" (click)="guardarPerfil()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          {{ guardandoPerfil ? 'Guardando...' : 'Guardar nombre' }}
+        </button>
+
+      </ng-container>
+
+      <ng-template #loadingPerfil>
+        <div class="loading-state">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          Cargando tu perfil...
+        </div>
+      </ng-template>
+
+    </div>
+
+    <!-- COMPAÑÍA -->
+
+    <div class="settings-card">
+
+      <div class="card-header">
+        <div class="card-icon company"><i class="fa-solid fa-building"></i></div>
+        <div>
+          <h2>Mi compañía</h2>
+          <p>Puedes editar el nombre y el NIT</p>
+        </div>
+      </div>
+
+      <ng-container *ngIf="!cargandoCompania; else loadingCompania">
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-building"></i> Nombre de la compañía</label>
+          <input type="text" [(ngModel)]="companyName" placeholder="Nombre de la compañía">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-id-card"></i> NIT</label>
+          <input type="text" [(ngModel)]="companyNit" placeholder="NIT">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-location-dot"></i> Dirección</label>
+          <input type="text" [value]="companyAddress" disabled>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-circle-check"></i> Estado</label>
+          <input type="text" [value]="companyStatusName" disabled>
+        </div>
+
+        <button class="btn-save" [disabled]="guardandoCompania" (click)="guardarCompania()">
+          <i class="fa-solid fa-floppy-disk"></i>
+          {{ guardandoCompania ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+
+      </ng-container>
+
+      <ng-template #loadingCompania>
+        <div class="loading-state">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          Cargando la compañía...
+        </div>
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</div>

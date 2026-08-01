@@ -14,4 +14,16 @@ export class UsuarioService {
   getUsuarios(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
+
+  getUsuariosByCompany(nit: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/company/${nit}`);
+  }
+
+  createUsuario(usuario: any): Observable<any> {
+    return this.http.post(this.apiUrl, usuario);
+  }
+
+  updateUsuario(cedula: string, usuario: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${cedula}`, usuario);
+  }
 }

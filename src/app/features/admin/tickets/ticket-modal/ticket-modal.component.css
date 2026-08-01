@@ -207,6 +207,19 @@
   gap:10px;
 }
 
+/* PLATE HINT */
+
+.plate-hint{
+  font-size:13px;
+  font-weight:600;
+  color:#16a34a;
+  margin-top:-4px;
+}
+
+.plate-hint.invalid{
+  color:#dc2626;
+}
+
 /* LABEL */
 
 .form-group label{

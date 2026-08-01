@@ -1,17 +1,17 @@
+<div #homeRoot>
+
 <section class="hero">
 
   <div class="hero-content">
 
-    <div class="hero-text">
+    <div class="hero-text reveal">
       <span class="tag">BIENVENIDO A PARKEOX</span>
-      <br><br>
-      <div>
-        <h1 class="grande">
-          Gestiona tu parqueadero con tecnología inteligente
-        </h1>
-      </div>
 
-      <p >
+      <h1 class="grande">
+        Gestiona tu parqueadero con tecnología inteligente
+      </h1>
+
+      <p>
         Optimiza el control de ingresos, salidas y disponibilidad en tiempo real.
         Más seguridad, más eficiencia.
       </p>
@@ -21,61 +21,120 @@
         <button class="btn-outline">Ver demostración</button>
       </div>
     </div>
-      <img class="hero-img" src="assets/img/hombrePC.png"/>
+
+    <img class="hero-img reveal reveal-right" src="assets/img/hombrePC.png" alt="Panel de control de Parkeox en un computador"/>
 
   </div>
-
-  <!-- CARDS -->
 
 </section>
 
 <section class="cards-section">
-    <div class="hero-cards">
+  <div class="hero-cards">
 
-    <div class="card">
-      <img src="assets/img/carro.png" alt="">
+    <div class="card reveal" style="--delay: 0s">
+      <img src="assets/img/carro.png" alt="Icono de control de accesos vehiculares">
       <h3>Control de Accesos</h3>
-      <p class="gris">Registra y gestiona el ingreso y salida de vehículos en tiempo real de forma automatica.</p>
-      <p><a href=""> Saber más -></a></p>
+      <p class="gris">Registra y gestiona el ingreso y salida de vehículos en tiempo real de forma automática.</p>
+      <p><a href="#control-accesos">Saber más -></a></p>
     </div>
 
-    <div class="card">
-      <img src="assets/img/barras.png" alt="">
+    <div class="card reveal" style="--delay: 0.12s">
+      <img src="assets/img/barras.png" alt="Icono de reportes e indicadores">
       <h3>Reportes Inteligentes</h3>
-      <p class="gris">Obten estadisticas detalladas y reportes personalizables  para tomar mejores decisiones</p>
-      <p><a href=""> Saber más -></a></p>
+      <p class="gris">Obtén estadísticas detalladas y reportes personalizables para tomar mejores decisiones.</p>
+      <p><a href="#reportes-inteligentes">Saber más -></a></p>
     </div>
 
-    <div class="card">
-      <img src="assets/img/verdadero.png" alt="">
+    <div class="card reveal" style="--delay: 0.24s">
+      <img src="assets/img/verdadero.png" alt="Icono de seguridad avanzada">
       <h3>Seguridad Avanzada</h3>
-      <p class="gris">Monitorea tu parqueadero controles avanzados y accesos seguros en todo momento.</p>
-      <p><a href=""> Saber más -></a></p>
+      <p class="gris">Monitorea tu parqueadero con controles avanzados y accesos seguros en todo momento.</p>
+      <p><a href="#seguridad-avanzada">Saber más -></a></p>
     </div>
 
   </div>
+</section>
+
+<!-- INFORMACION DETALLADA -->
+<section class="info-detail">
+
+  <div id="control-accesos" class="info-row reveal">
+    <div class="info-row-text">
+      <span class="tag-dark">CONTROL DE ACCESOS</span>
+      <h2>Ingresos y salidas bajo control total</h2>
+      <p class="gris">
+        Cada vehículo queda registrado automáticamente al entrar y salir, sin depender de procesos manuales
+        ni papeleo. El sistema identifica el movimiento en tiempo real y mantiene un historial confiable
+        de toda la operación.
+      </p>
+      <ul class="info-list">
+        <li>Registro automático de placa y hora de ingreso/salida</li>
+        <li>Apertura y cierre de barreras desde el sistema</li>
+        <li>Historial completo consultable por vehículo o fecha</li>
+        <li>Alertas ante intentos de acceso no autorizados</li>
+      </ul>
+    </div>
+    <img class="info-row-img" src="assets/img/carro.png" alt="Control de accesos vehiculares">
+  </div>
+
+  <div id="reportes-inteligentes" class="info-row reverse reveal">
+    <div class="info-row-text">
+      <span class="tag-dark">REPORTES INTELIGENTES</span>
+      <h2>Datos claros para decidir mejor</h2>
+      <p class="gris">
+        Convierte la operación diaria de tu parqueadero en información útil. Visualiza el comportamiento
+        del negocio y detecta oportunidades de mejora con reportes pensados para tomar decisiones rápidas.
+      </p>
+      <ul class="info-list">
+        <li>Estadísticas de ocupación por hora, día y mes</li>
+        <li>Reportes de ingresos y facturación exportables</li>
+        <li>Comparativos de rendimiento entre sedes</li>
+        <li>Paneles visuales fáciles de interpretar</li>
+      </ul>
+    </div>
+    <img class="info-row-img" src="assets/img/barras.png" alt="Reportes e indicadores inteligentes">
+  </div>
+
+  <div id="seguridad-avanzada" class="info-row reveal">
+    <div class="info-row-text">
+      <span class="tag-dark">SEGURIDAD AVANZADA</span>
+      <h2>Protección en cada nivel del sistema</h2>
+      <p class="gris">
+        La seguridad de tu operación no se negocia. Cada acción queda registrada y cada usuario accede
+        únicamente a lo que le corresponde, con monitoreo constante sobre toda la plataforma.
+      </p>
+      <ul class="info-list">
+        <li>Roles y permisos configurables por usuario</li>
+        <li>Monitoreo de actividad en tiempo real</li>
+        <li>Trazabilidad completa de cada operación</li>
+        <li>Protección de datos siguiendo buenas prácticas</li>
+      </ul>
+    </div>
+    <img class="info-row-img" src="assets/img/verdadero.png" alt="Seguridad avanzada del sistema">
+  </div>
 
 </section>
+
 <!-- LOGOS -->
-<section class="brands">
-  <p>Vehiculos de todo tipo</p>
+<section class="brands reveal">
+  <p>Vehículos de todo tipo</p>
 
   <div class="slider">
     <div class="slide-track">
 
       <!-- BLOQUE ORIGINAL -->
-      <div class="slide"><img src="https://label-magazine.com/images/article/2021/03-marzec-march/Renault_logo.png"></div>
-      <div class="slide"><img src="https://i.pinimg.com/originals/aa/b6/75/aab675730c0bc457859f6e01b3d5ac6d.png"></div>
-      <div class="slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/1280px-BMW.svg.png"></div>
-      <div class="slide"><img src="https://i.pinimg.com/originals/14/eb/e3/14ebe3da0146023a6038c176e6a7a9c6.png"></div>
-      <div class="slide"><img src="https://logos-world.net/wp-content/uploads/2021/03/Chevrolet-Logo.png"></div>
+      <div class="slide"><img src="https://label-magazine.com/images/article/2021/03-marzec-march/Renault_logo.png" alt="Renault"></div>
+      <div class="slide"><img src="https://i.pinimg.com/originals/aa/b6/75/aab675730c0bc457859f6e01b3d5ac6d.png" alt="Marca de vehículo"></div>
+      <div class="slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/1280px-BMW.svg.png" alt="BMW"></div>
+      <div class="slide"><img src="https://i.pinimg.com/originals/14/eb/e3/14ebe3da0146023a6038c176e6a7a9c6.png" alt="Marca de vehículo"></div>
+      <div class="slide"><img src="https://logos-world.net/wp-content/uploads/2021/03/Chevrolet-Logo.png" alt="Chevrolet"></div>
 
-      <!-- DUPLICADO -->
-      <div class="slide"><img src="https://label-magazine.com/images/article/2021/03-marzec-march/Renault_logo.png"></div>
-      <div class="slide"><img src="https://i.pinimg.com/originals/aa/b6/75/aab675730c0bc457859f6e01b3d5ac6d.png"></div>
-      <div class="slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/1280px-BMW.svg.png"></div>
-      <div class="slide"><img src="https://i.pinimg.com/originals/14/eb/e3/14ebe3da0146023a6038c176e6a7a9c6.png"></div>
-      <div class="slide"><img src="https://logos-world.net/wp-content/uploads/2021/03/Chevrolet-Logo.png"></div>
+      <!-- DUPLICADO para loop continuo -->
+      <div class="slide"><img src="https://label-magazine.com/images/article/2021/03-marzec-march/Renault_logo.png" alt="" aria-hidden="true"></div>
+      <div class="slide"><img src="https://i.pinimg.com/originals/aa/b6/75/aab675730c0bc457859f6e01b3d5ac6d.png" alt="" aria-hidden="true"></div>
+      <div class="slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/1280px-BMW.svg.png" alt="" aria-hidden="true"></div>
+      <div class="slide"><img src="https://i.pinimg.com/originals/14/eb/e3/14ebe3da0146023a6038c176e6a7a9c6.png" alt="" aria-hidden="true"></div>
+      <div class="slide"><img src="https://logos-world.net/wp-content/uploads/2021/03/Chevrolet-Logo.png" alt="" aria-hidden="true"></div>
 
     </div>
   </div>
@@ -86,7 +145,7 @@
 
   <div class="about-container">
 
-    <div class="about-text">
+    <div class="about-text reveal">
       <h2>Todo lo que necesitas para gestionar tu parqueadero</h2>
 
       <p>
@@ -99,11 +158,11 @@
         <li>✔ Notificaciones inteligentes</li>
       </ul>
 
-      <button class="btn-primary">Visitar sistema</button>
+      <button class="btn-primary" routerLink="/login">Visitar sistema</button>
     </div>
 
-    <div class="about-img">
-      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" />
+    <div class="about-img reveal reveal-right">
+      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" alt="Parqueadero moderno"/>
     </div>
 
   </div>
@@ -111,17 +170,17 @@
   <!-- FEATURES -->
   <div class="features">
 
-    <div class="feature">
+    <div class="feature reveal" style="--delay: 0s">
       <h4>Oficina Remota</h4>
       <p>Gestiona tu parqueadero desde cualquier lugar.</p>
     </div>
 
-    <div class="feature active">
+    <div class="feature active reveal" style="--delay: 0.1s">
       <h4>Estación Virtual</h4>
       <p>Accede al sistema de forma segura.</p>
     </div>
 
-    <div class="feature">
+    <div class="feature reveal" style="--delay: 0.2s">
       <h4>Servidor en la nube</h4>
       <p>Disponibilidad 24/7 garantizada.</p>
     </div>
@@ -133,24 +192,26 @@
 <!-- STATS -->
 <section class="stats">
 
-  <div class="stat">
+  <div class="stat reveal" style="--delay: 0s">
     <h3>+5,000</h3>
     <p>Vehículos diarios</p>
   </div>
 
-  <div class="stat">
+  <div class="stat reveal" style="--delay: 0.1s">
     <h3>98%</h3>
     <p>Disponibilidad</p>
   </div>
 
-  <div class="stat">
+  <div class="stat reveal" style="--delay: 0.2s">
     <h3>+1,200</h3>
     <p>Clientes</p>
   </div>
 
-  <div class="stat">
+  <div class="stat reveal" style="--delay: 0.3s">
     <h3>100%</h3>
     <p>Seguridad</p>
   </div>
 
 </section>
+
+</div>

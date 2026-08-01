@@ -1,0 +1,159 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="personal-page">
+
+  <!-- HEADER -->
+
+  <div class="personal-header">
+
+    <div>
+      <h1>
+        <i class="fa-solid fa-users"></i>
+        Personal
+      </h1>
+      <p>Administra los usuarios y administradores de tu compañía</p>
+    </div>
+
+    <button class="btn-create" (click)="openCreateModal()">
+      <i class="fa-solid fa-user-plus"></i>
+      Nuevo integrante
+    </button>
+
+  </div>
+
+  <!-- FILTERS -->
+
+  <div class="filters-panel">
+
+    <div class="filter-box search-box">
+      <label>BUSCAR</label>
+      <div class="input-icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Nombre, correo o cédula">
+      </div>
+    </div>
+
+    <div class="filter-box">
+      <label>ROL</label>
+      <select [(ngModel)]="roleFilter">
+        <option value="">Todos</option>
+        <option *ngFor="let r of roleOptions" [value]="r">{{ r }}</option>
+      </select>
+    </div>
+
+    <div class="filter-box">
+      <label>ESTADO</label>
+      <select [(ngModel)]="statusFilter">
+        <option value="">Todos</option>
+        <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <div class="total-box">
+      <label>INTEGRANTES</label>
+      <h2>{{ filteredUsuarios.length }}</h2>
+    </div>
+
+  </div>
+
+  <!-- TABLE -->
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Cédula</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let usuario of filteredUsuarios">
+
+          <td class="name-cell">
+            {{ usuario.name }}
+            <span class="you-tag" *ngIf="isCurrentUser(usuario)">Tú</span>
+          </td>
+
+          <td>{{ usuario.cedula }}</td>
+
+          <td>{{ usuario.email }}</td>
+
+          <td>{{ usuario.tel }}</td>
+
+          <td>
+            <span class="role" [class.role-admin]="esAdmin(usuario.role)" [class.role-user]="!esAdmin(usuario.role)">
+              {{ usuario.role }}
+            </span>
+          </td>
+
+          <td>
+            <span class="status" [class.active]="!esInactivo(usuario.status)" [class.inactive]="esInactivo(usuario.status)">
+              {{ usuario.status }}
+            </span>
+          </td>
+
+          <td class="actions">
+
+            <button class="btn-action edit" title="Editar" (click)="openEditModal(usuario)">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+
+            <button
+              class="btn-action toggle"
+              [class.activate]="esInactivo(usuario.status)"
+              [class.deactivate]="!esInactivo(usuario.status)"
+              [disabled]="isCurrentUser(usuario)"
+              [title]="esInactivo(usuario.status) ? 'Activar' : 'Desactivar'"
+              (click)="toggleEstado(usuario)">
+              <i class="fa-solid" [class.fa-user-check]="esInactivo(usuario.status)" [class.fa-user-slash]="!esInactivo(usuario.status)"></i>
+            </button>
+
+          </td>
+
+        </tr>
+
+        <tr *ngIf="!cargando && filteredUsuarios.length === 0">
+          <td colspan="7" class="empty-row">
+            <i class="fa-solid fa-users-slash"></i>
+            No se encontraron integrantes
+          </td>
+        </tr>
+
+        <tr *ngIf="cargando">
+          <td colspan="7" class="empty-row">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Cargando personal...
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+<app-personal-modal
+  *ngIf="showCreateModal"
+  [companyId]="companyId"
+  [companyName]="companyName"
+  (close)="closeCreateModal()"
+  (usuarioCreado)="onUsuarioCreado()">
+</app-personal-modal>
+
+<app-personal-detail
+  *ngIf="showEditModal"
+  [usuario]="selectedUsuario"
+  (close)="closeEditModal()"
+  (usuarioActualizado)="onUsuarioActualizado()">
+</app-personal-detail>

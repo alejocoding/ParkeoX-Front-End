@@ -3,11 +3,29 @@ body{
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* Los modales propios usan z-index:9999, por encima del z-index:1060
+   por defecto de SweetAlert2 — sin esto, sus diálogos quedan ocultos
+   detrás de cualquier modal abierto. */
+.swal2-container {
+  z-index: 20000 !important;
+}
+
 /* =========================
    ESTILOS DE IMPRESIÓN DE TICKET
    (deben ser globales: @media print necesita ocultar TODO el documento,
    no solo lo renderizado por el componente ticket-detail)
 ========================= */
+
+/* margin:0 elimina el encabezado/pie que agrega el navegador por defecto
+   (fecha, ruta y número de página) al no dejarles espacio donde dibujarse */
+@page {
+  size: auto;
+  margin: 0;
+}
 
 @media print {
 
@@ -23,7 +41,7 @@ body{
   .print-receipt {
     display: block;
     position: fixed;
-    top: 0;
+    top: 8mm;
     left: 50%;
     transform: translateX(-50%);
     width: 280px;
@@ -31,6 +49,15 @@ body{
     background: white;
     padding: 20px;
     color: #000;
+  }
+
+  .receipt-company {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 2px;
   }
 
   .receipt-brand {

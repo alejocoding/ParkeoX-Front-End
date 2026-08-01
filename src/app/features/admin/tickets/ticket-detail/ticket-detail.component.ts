@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TicketService } from '../service/ticket.service';
+import { TicketService } from '../../../../services/ticket.service';
 import { StatusService } from '../../../../services/status.service';
+import { formatPlate, isValidPlate } from '../utils/plate.util';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,6 +16,7 @@ import Swal from 'sweetalert2';
 export class TicketDetailComponent implements OnInit {
 
   @Input() ticket: any;
+  @Input() companyName: string = '';
   @Output() close = new EventEmitter<void>();
   @Output() ticketUpdated = new EventEmitter<void>();
 
@@ -47,6 +49,10 @@ export class TicketDetailComponent implements OnInit {
     });
   }
 
+  onPlateChange(value: string): void {
+    this.editedPlate = formatPlate(value);
+  }
+
   get selectedStatusName(): string {
     return this.statusOptions.find(s => s.id === this.editedStatus)?.status ?? '';
   }
@@ -64,6 +70,15 @@ export class TicketDetailComponent implements OnInit {
   saveChanges(): void {
     if (!this.editedPlate.trim()) {
       Swal.fire({ icon: 'warning', title: 'Campo requerido', text: 'La placa no puede estar vacía' });
+      return;
+    }
+
+    if (!isValidPlate(this.editedPlate)) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Placa inválida',
+        text: 'Ingresa una placa con formato válido: ABC-123 para carro o ABC-12D para moto.'
+      });
       return;
     }
 

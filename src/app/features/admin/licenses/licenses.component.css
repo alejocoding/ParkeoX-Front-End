@@ -1,0 +1,265 @@
+/* PAGE */
+
+.licenses-page {
+  padding: 20px;
+  background: #f6f4fb;
+  min-height: 100vh;
+  color: #1e293b;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* HEADER */
+
+.licenses-header {
+  margin-bottom: 25px;
+}
+
+.licenses-header h1 {
+  font-size: 30px;
+  margin: 0;
+  color: #1e293b;
+}
+
+.licenses-header p {
+  color: #64748b;
+  margin-top: 5px;
+}
+
+/* STATE (loading / empty) */
+
+.state-card {
+  background: white;
+  border-radius: 18px;
+  padding: 60px 20px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 15px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  border: 1px solid #e2e8f0;
+}
+
+.state-card i {
+  display: block;
+  font-size: 34px;
+  margin-bottom: 12px;
+  color: #cbd5e1;
+}
+
+/* GRID */
+
+.licenses-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 400px) 1fr;
+  gap: 25px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .licenses-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CARD SHELL */
+
+.licenses-card {
+  background: white;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  border: 1px solid #e2e8f0;
+}
+
+/* GAUGE CARD */
+
+.gauge-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.gauge-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+.gauge-svg {
+  width: 100%;
+  display: block;
+}
+
+.gauge-track {
+  fill: none;
+  stroke: #eef0f4;
+  stroke-width: 18;
+  stroke-linecap: round;
+}
+
+.gauge-fill {
+  fill: none;
+  stroke-width: 18;
+  stroke-linecap: round;
+  transition: stroke-dashoffset .6s ease, stroke .3s ease;
+}
+
+.gauge-fill.good { stroke: #0ca30c; }
+.gauge-fill.warning { stroke: #fab219; }
+.gauge-fill.critical { stroke: #d03b3b; }
+
+.gauge-center {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gauge-percent {
+  font-size: 34px;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1;
+}
+
+.gauge-caption {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+/* STATUS BADGE */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 18px;
+}
+
+.status-badge.good {
+  background: rgba(12, 163, 12, 0.12);
+  color: #0ca30c;
+}
+
+.status-badge.warning {
+  background: rgba(250, 178, 25, 0.16);
+  color: #a86a00;
+}
+
+.status-badge.critical {
+  background: rgba(208, 59, 59, 0.12);
+  color: #d03b3b;
+}
+
+/* RENEW BUTTON */
+
+.btn-renew {
+  width: 100%;
+  margin-top: 20px;
+  border: none;
+  padding: 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s ease;
+  box-shadow: 0 12px 25px rgba(124, 58, 237, .25);
+  font-family: inherit;
+}
+
+.btn-renew:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 32px rgba(124, 58, 237, .35);
+}
+
+.btn-renew:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+}
+
+/* DETAIL CARD */
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.25);
+}
+
+.card-header h2 {
+  font-size: 18px;
+  margin: 0 0 4px 0;
+  color: #1e293b;
+}
+
+.card-header p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.detail-row span i {
+  color: #7c3aed;
+  width: 14px;
+}
+
+.detail-row strong {
+  font-size: 14px;
+  color: #1e293b;
+  text-align: right;
+}
+
+.detail-row strong.mono {
+  font-family: 'Courier New', monospace;
+  letter-spacing: .5px;
+}

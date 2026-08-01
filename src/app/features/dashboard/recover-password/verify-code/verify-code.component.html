@@ -53,7 +53,7 @@
       <h2>Verifica tu código</h2>
       <p class="sub">Ingresa el código de 6 dígitos que enviamos a tu correo</p>
 
-      <form>
+      <form (ngSubmit)="verificarCodigo()">
 
         <div class="input-group">
           <i class="fas fa-key"></i>
@@ -65,7 +65,7 @@
           <a routerLink="/forgot-password">Reenviar</a>
         </p>
 
-        <button type="button" class="btn-primary" routerLink="/reset-password">
+        <button type="submit" class="btn-primary">
           Verificar código
         </button>
 

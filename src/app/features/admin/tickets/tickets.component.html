@@ -19,97 +19,193 @@
 
   </div>
 
-  <!-- SEARCH PANEL -->
+  <!-- FILTERS -->
 
-  <div class="search-panel">
+  <div class="filters-panel">
 
-    <div class="plate-box">
-      <label>BUSCAR PLACA</label>
-      <input
-        type="text"
-        [(ngModel)]="searchPlate"
-        placeholder="NKX322"
-      />
+    <div class="filter-box search-box">
+      <label>BUSCAR / CREAR PLACA</label>
+      <div class="input-with-action">
+        <input
+          type="text"
+          [ngModel]="searchPlate"
+          (ngModelChange)="onSearchPlateChange($event)"
+          placeholder="ABC-123"
+          maxlength="7" />
+        <button
+          class="btn-quick-create"
+          *ngIf="searchPlate"
+          title="Crear ticket con esta placa"
+          (click)="quickCreateFromSearch()">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
     </div>
 
-    <div class="total-box">
-      <label>TICKETS</label>
-      <h2>{{ filteredTickets.length }}</h2>
+    <div class="filter-box">
+      <label>ESTADO</label>
+      <select [(ngModel)]="statusFilter">
+        <option value="">Todos</option>
+        <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <div class="filter-box">
+      <label>TIPO DE VEHÍCULO</label>
+      <select [(ngModel)]="vehicleTypeFilter">
+        <option value="">Todos</option>
+        <option value="Particular">Vehículo</option>
+        <option value="Motocicleta">Motocicleta</option>
+      </select>
     </div>
 
   </div>
 
-  <!-- TABLE -->
+  <!-- TOTAL (debajo de los filtros) -->
 
-  <div class="table-container">
+  <div class="total-row">
+    <div class="total-box">
+      <label>TICKETS</label>
+      <h2>{{ filteredTickets.length }}</h2>
+    </div>
+  </div>
 
-    <table>
+  <!-- CONTENIDO: TABLA + VISTA PREVIA -->
 
-      <thead>
-        <tr>
-          <th>Placa</th>
-          <th>Entrada</th>
-          <th>Tarifa</th>
-          <th>Total</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
+  <div class="tickets-content">
 
-      <tbody>
+    <div class="table-container">
 
-        <tr *ngFor="let ticket of filteredTickets">
+      <table>
 
-          <td class="plate">
-            {{ ticket.vehicle | uppercase }}
-          </td>
+        <thead>
+          <tr>
+            <th>Placa</th>
+            <th>Tipo</th>
+            <th>Entrada</th>
+            <th>Tarifa</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
 
-          <td>
-            {{ ticket.checkInAt | date:'dd/MM/yyyy HH:mm' }}
-          </td>
+        <tbody>
 
-          <td>
-            {{ ticket.tariff }}
-          </td>
+          <tr
+            *ngFor="let ticket of filteredTickets"
+            (click)="selectPreview(ticket)"
+            [class.selected]="previewTicket?.id === ticket.id">
 
-          <td>
-            ${{ ticket.total | currency:' ':'symbol':'1.0-0' }}
-          </td>
+            <td class="plate">
+              {{ ticket.vehicle | uppercase }}
+            </td>
 
-          <td>
-            <span class="status" [class.active]="ticket.status?.toLowerCase() !== 'cerrado'" [class.closed]="ticket.status?.toLowerCase() === 'cerrado'">
-              {{ ticket.status }}
-            </span>
-          </td>
+            <td class="type-cell">
+              <span class="type-tag" [class.type-moto]="inferVehicleType(ticket.vehicle) === 'Motocicleta'">
+                {{ vehicleLabelFor(ticket.vehicle) }}
+              </span>
+            </td>
 
-          <td class="actions">
+            <td>
+              {{ ticket.checkInAt | date:'dd/MM/yyyy HH:mm' }}
+            </td>
 
+            <td>
+              {{ ticket.tariff }}
+            </td>
 
-            <button class="btn-action edit" title="Editar" (click)="openEditModal(ticket)">
-              <i class="fa-solid fa-pen"></i>
-            </button>
+            <td>
+              ${{ ticket.total | currency:' ':'symbol':'1.0-0' }}
+            </td>
 
-            <button class="btn-action delete" title="Eliminar" (click)="deleteTicket(ticket)">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-            <button class="btn-action" title="Imprimir" (click)="printDirectly(ticket)">
-              <i class="fa-solid fa-print"></i>
-            </button>
+            <td>
+              <span class="status" [class.active]="ticket.status?.toLowerCase() !== 'cerrado'" [class.closed]="ticket.status?.toLowerCase() === 'cerrado'">
+                {{ ticket.status }}
+              </span>
+            </td>
 
-          </td>
+            <td class="actions">
 
-        </tr>
+              <button class="btn-action delete" title="Eliminar" (click)="$event.stopPropagation(); deleteTicket(ticket)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+              <button class="btn-action" title="Imprimir" (click)="$event.stopPropagation(); printDirectly(ticket)">
+                <i class="fa-solid fa-print"></i>
+              </button>
 
-        <tr *ngIf="filteredTickets.length === 0">
-          <td colspan="6" class="empty-row">
-            <i class="fa-solid fa-ticket"></i>
-            No se encontraron tickets
-          </td>
-        </tr>
+            </td>
 
-      </tbody>
+          </tr>
 
-    </table>
+          <tr *ngIf="filteredTickets.length === 0">
+            <td colspan="7" class="empty-row">
+              <i class="fa-solid fa-ticket"></i>
+              No se encontraron tickets
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- VISTA PREVIA -->
+
+    <div class="preview-panel" *ngIf="previewTicket">
+
+      <div class="preview-panel-header">
+        <h3>{{ previewTicket.vehicle | uppercase }}</h3>
+        <button class="btn-close-preview" title="Cerrar" (click)="closePreview()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <span class="preview-type-badge">
+        {{ vehicleLabelFor(previewTicket.vehicle) }}
+      </span>
+
+      <div class="preview-rows">
+
+        <div class="preview-row">
+          <span>Ticket #</span>
+          <strong>{{ previewTicket.id }}</strong>
+        </div>
+
+        <div class="preview-row">
+          <span>Estado</span>
+          <strong>{{ previewTicket.status }}</strong>
+        </div>
+
+        <div class="preview-row">
+          <span>Entrada</span>
+          <strong>{{ previewTicket.checkInAt | date:'dd/MM/yyyy HH:mm' }}</strong>
+        </div>
+
+        <div class="preview-row">
+          <span>Salida</span>
+          <strong>{{ previewTicket.checkOutAt ? (previewTicket.checkOutAt | date:'dd/MM/yyyy HH:mm') : '---' }}</strong>
+        </div>
+
+        <div class="preview-row">
+          <span>Tarifa</span>
+          <strong>{{ previewTicket.tariff }}</strong>
+        </div>
+
+      </div>
+
+      <div class="preview-total">
+        <span>Total a pagar</span>
+        <h2>{{ previewTicket.total | currency:'COP ':'symbol':'1.0-0' }}</h2>
+      </div>
+
+      <button class="btn-edit-preview" (click)="openEditFromPreview()">
+        <i class="fa-solid fa-pen"></i>
+        Editar ticket
+      </button>
+
+    </div>
 
   </div>
 
@@ -117,6 +213,8 @@
 
 <!-- Recibo directo de impresión -->
 <div class="print-receipt" *ngIf="ticketToPrint">
+
+  <div class="receipt-company" *ngIf="companyName">{{ companyName }}</div>
 
   <div class="receipt-brand">
     <i class="fa-solid fa-square-parking"></i>
@@ -127,6 +225,7 @@
   <div class="receipt-dashes">· · · · · · · · · · · · · · · · · · · · ·</div>
 
   <div class="receipt-rows">
+    <div class="receipt-row"><span>Ticket #</span><strong>{{ ticketToPrint.id }}</strong></div>
     <div class="receipt-row"><span>Placa</span><strong>{{ ticketToPrint.vehicle | uppercase }}</strong></div>
     <div class="receipt-row"><span>Tarifa</span><strong>{{ ticketToPrint.tariff }}</strong></div>
     <div class="receipt-row"><span>Ingreso</span><strong>{{ ticketToPrint.checkInAt | date:'dd/MM/yyyy HH:mm' }}</strong></div>
@@ -156,6 +255,7 @@
 
 <app-ticket-modal
   *ngIf="showModal"
+  [initialPlate]="initialPlateForModal"
   (close)="closeModal()"
   (ticketSaved)="onTicketSaved()"
   (ticketUpdated)="onTicketUpdated()">
@@ -164,6 +264,7 @@
 <app-ticket-detail
   *ngIf="showEditModal"
   [ticket]="selectedTicket"
+  [companyName]="companyName"
   (close)="closeEditModal()"
   (ticketUpdated)="onTicketUpdated()">
 </app-ticket-detail>

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TicketService } from './service/ticket.service';
+import { TicketService } from '../../../services/ticket.service';
 import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
 import { FormsModule } from '@angular/forms';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
+import { AuthService } from '../../../services/auth.service';
+import { CompanyService } from '../../../services/company.service';
+import { detectVehicleType, formatPlate, vehicleLabel } from './utils/plate.util';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,14 +21,31 @@ export class TicketsComponent implements OnInit {
   tickets: any[] = [];
   showModal: boolean = false;
   searchPlate: string = '';
+  statusFilter: string = '';
+  vehicleTypeFilter: string = '';
   showEditModal: boolean = false;
   selectedTicket: any = null;
+  previewTicket: any = null;
   ticketToPrint: any = null;
+  companyName: string = '';
+  initialPlateForModal: string = '';
 
-  constructor(private ticketService: TicketService) {}
+  constructor(
+    private ticketService: TicketService,
+    private authService: AuthService,
+    private companyService: CompanyService
+  ) {}
 
   ngOnInit(): void {
     this.loadTickets();
+
+    const nit = this.authService.getcompany();
+    if (nit) {
+      this.companyService.getCompany(nit).subscribe({
+        next: (data) => this.companyName = data?.name ?? '',
+        error: (err) => console.error('Error al cargar la compañía:', err)
+      });
+    }
   }
 
   loadTickets(): void {
@@ -45,19 +65,29 @@ export class TicketsComponent implements OnInit {
   }
 
   onTicketUpdated(): void {
+    this.previewTicket = null;
     this.loadTickets();
   }
 
-  openModal(): void {
+  onSearchPlateChange(value: string): void {
+    this.searchPlate = formatPlate(value);
+  }
+
+  openModal(plate: string = ''): void {
+    this.initialPlateForModal = plate;
     this.showModal = true;
   }
 
   closeModal(): void {
     this.showModal = false;
+    this.initialPlateForModal = '';
+  }
+
+  quickCreateFromSearch(): void {
+    this.openModal(this.searchPlate);
   }
 
   openEditModal(ticket: any): void {
-    console.log('Ticket seleccionado para editar:', ticket);
     this.selectedTicket = ticket;
     this.showEditModal = true;
   }
@@ -65,6 +95,27 @@ export class TicketsComponent implements OnInit {
   closeEditModal(): void {
     this.showEditModal = false;
     this.selectedTicket = null;
+  }
+
+  openEditFromPreview(): void {
+    if (!this.previewTicket) return;
+    this.openEditModal(this.previewTicket);
+  }
+
+  selectPreview(ticket: any): void {
+    this.previewTicket = this.previewTicket?.id === ticket.id ? null : ticket;
+  }
+
+  closePreview(): void {
+    this.previewTicket = null;
+  }
+
+  inferVehicleType(plate: string): string {
+    return detectVehicleType(plate) ?? 'Desconocido';
+  }
+
+  vehicleLabelFor(plate: string): string {
+    return vehicleLabel(detectVehicleType(plate));
   }
 
   deleteTicket(ticket: any): void {
@@ -87,6 +138,7 @@ export class TicketsComponent implements OnInit {
             timer: 2000,
             showConfirmButton: false
           });
+          if (this.previewTicket?.id === ticket.id) this.previewTicket = null;
           this.loadTickets();
         },
         error: (err) => {
@@ -110,12 +162,18 @@ export class TicketsComponent implements OnInit {
     }, 150);
   }
 
+  get statusOptions(): string[] {
+    return Array.from(new Set(this.tickets.map((t) => t.status).filter(Boolean)));
+  }
+
   get filteredTickets() {
-    if (!this.searchPlate) {
-      return this.tickets;
-    }
-    return this.tickets.filter((ticket: any) =>
-      ticket.vehicle?.toLowerCase().includes(this.searchPlate.toLowerCase())
-    );
+    const term = this.searchPlate.trim().toLowerCase();
+
+    return this.tickets.filter((ticket: any) => {
+      const matchesSearch = !term || ticket.vehicle?.toLowerCase().includes(term);
+      const matchesStatus = !this.statusFilter || ticket.status === this.statusFilter;
+      const matchesType = !this.vehicleTypeFilter || this.inferVehicleType(ticket.vehicle) === this.vehicleTypeFilter;
+      return matchesSearch && matchesStatus && matchesType;
+    });
   }
 }

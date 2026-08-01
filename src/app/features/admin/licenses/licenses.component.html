@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="licenses-page">
+
+  <!-- HEADER -->
+
+  <div class="licenses-header">
+    <div>
+      <h1>
+        <i class="fa-solid fa-id-badge"></i>
+        Licencia
+      </h1>
+      <p>Estado y vigencia de la licencia de tu compañía</p>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+
+  <div class="state-card" *ngIf="cargando">
+    <i class="fa-solid fa-spinner fa-spin"></i>
+    Cargando licencia...
+  </div>
+
+  <!-- EMPTY -->
+
+  <div class="state-card" *ngIf="!cargando && !license">
+    <i class="fa-solid fa-id-badge"></i>
+    Tu compañía no tiene una licencia registrada
+  </div>
+
+  <!-- CONTENT -->
+
+  <div class="licenses-grid" *ngIf="!cargando && license">
+
+    <!-- GAUGE CARD -->
+
+    <div class="licenses-card gauge-card">
+
+      <div class="gauge-wrap">
+
+        <svg class="gauge-svg" viewBox="0 0 200 112">
+          <path class="gauge-track" d="M20,100 A80,80 0 0 1 180,100" />
+          <path
+            class="gauge-fill"
+            [class.good]="urgencia === 'good'"
+            [class.warning]="urgencia === 'warning'"
+            [class.critical]="urgencia === 'critical'"
+            d="M20,100 A80,80 0 0 1 180,100"
+            [attr.stroke-dasharray]="gaugeLength"
+            [attr.stroke-dashoffset]="gaugeOffset" />
+        </svg>
+
+        <div class="gauge-center">
+          <span class="gauge-percent">{{ porcentajeRestante | number:'1.0-0' }}%</span>
+          <span class="gauge-caption">tiempo restante</span>
+        </div>
+
+      </div>
+
+      <div class="status-badge" [class.good]="urgencia === 'good'" [class.warning]="urgencia === 'warning'" [class.critical]="urgencia === 'critical'">
+        <i class="fa-solid" [class]="urgenciaIcon"></i>
+        {{ urgenciaLabel }}
+      </div>
+
+      <button
+        class="btn-renew"
+        *ngIf="mostrarSolicitarRenovacion"
+        [disabled]="solicitando"
+        (click)="solicitarRenovacion()">
+        <i class="fa-solid fa-rotate"></i>
+        {{ solicitando ? 'Enviando...' : 'Solicitar renovación' }}
+      </button>
+
+    </div>
+
+    <!-- DETAIL CARD -->
+
+    <div class="licenses-card detail-card">
+
+      <div class="card-header">
+        <div class="card-icon"><i class="fa-solid fa-file-contract"></i></div>
+        <div>
+          <h2>Detalles de la licencia</h2>
+          <p>{{ license.licenseType }}</p>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <span><i class="fa-solid fa-hashtag"></i> Identificador</span>
+        <strong class="mono">{{ license.idLicense }}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span><i class="fa-solid fa-play"></i> Fecha de inicio</span>
+        <strong>{{ license.beginAt | date:'dd/MM/yyyy' }}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span><i class="fa-solid fa-flag-checkered"></i> Fecha de vencimiento</span>
+        <strong>{{ license.endAt | date:'dd/MM/yyyy' }}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span><i class="fa-solid fa-calendar-day"></i> Días transcurridos</span>
+        <strong>{{ diasTranscurridos }} de {{ duracionTotalDias }} días</strong>
+      </div>
+
+      <div class="detail-row">
+        <span><i class="fa-solid fa-hourglass-half"></i> Días restantes</span>
+        <strong>{{ vencida ? 'Vencida' : (diasRestantes + ' días') }}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span><i class="fa-solid fa-building"></i> Compañía</span>
+        <strong>{{ license.company }}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span><i class="fa-solid fa-circle-check"></i> Estado administrativo</span>
+        <strong>{{ license.status }}</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

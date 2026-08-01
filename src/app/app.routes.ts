@@ -13,6 +13,10 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { DashboardComponent } from './features/admin/dashboard/dashboard.component';
 import { authGuard } from './guards/auth.guard';
 import { TicketsComponent } from './features/admin/tickets/tickets.component';
+import { PersonalComponent } from './features/admin/personal/personal.component';
+import { SettingsComponent } from './features/admin/settings/settings.component';
+import { LicensesComponent } from './features/admin/licenses/licenses.component';
+import { Roles } from './core/constants/roles';
 
 
 export const routes: Routes = [
@@ -66,10 +70,13 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminLayoutComponent,
     canActivate: [authGuard],
-    data: { role: 'SUPERADMIN' },
+    data: { roles: [Roles.ADMIN, Roles.SUPERADMIN] },
     children: [
       {path:'dashboard', component: DashboardComponent },
-      {path:'tickets', component: TicketsComponent }
+      {path:'tickets', component: TicketsComponent },
+      {path:'personal', component: PersonalComponent },
+      {path:'settings', component: SettingsComponent },
+      {path:'licenses', component: LicensesComponent }
     ]
   }
 
