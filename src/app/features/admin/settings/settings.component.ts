@@ -31,6 +31,9 @@ export class SettingsComponent implements OnInit {
   companyName: string = '';
   companyNit: string = '';
   companyAddress: string = '';
+  companyPhone: string = '';
+  companyEmail: string = '';
+  companyLogo: string = '';
   companyStatusName: string = '';
 
   private nit: string;
@@ -80,6 +83,10 @@ export class SettingsComponent implements OnInit {
         this.companyName = data?.name ?? '';
         this.companyNit = data?.nit ?? '';
         this.companyAddress = data?.address ?? '';
+        this.companyPhone = data?.phone ?? '';
+        this.companyEmail = data?.email ?? '';
+        this.companyLogo = data?.logo ?? '';
+
         this.companyStatusName = data?.status ?? '';
 
         this.statusService.getStatus().subscribe({
@@ -95,6 +102,22 @@ export class SettingsComponent implements OnInit {
         Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudo cargar la información de la compañía' });
       }
     });
+  }
+
+  onLogoSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      Swal.fire({ icon: 'warning', title: 'Archivo inválido', text: 'Selecciona un archivo de imagen' });
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.companyLogo = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
   guardarPerfil(): void {
@@ -146,6 +169,9 @@ export class SettingsComponent implements OnInit {
       name: this.companyName.trim(),
       nit: this.companyNit.trim(),
       address: this.companyAddress,
+      phone: this.companyPhone,
+      email: this.companyEmail,
+      logo: this.companyLogo,
       status: this.companyStatusId
     };
 

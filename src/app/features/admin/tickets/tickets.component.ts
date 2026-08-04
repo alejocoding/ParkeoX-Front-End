@@ -1,39 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TicketService } from '../../../services/ticket.service';
-import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
 import { FormsModule } from '@angular/forms';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 import { AuthService } from '../../../services/auth.service';
 import { CompanyService } from '../../../services/company.service';
-import { detectVehicleType, formatPlate, vehicleLabel } from './utils/plate.util';
+import { TariffsService } from '../../../services/tariffs.service';
+import { detectVehicleType, formatPlate, isValidPlate, vehicleLabel } from './utils/plate.util';
 import Swal from 'sweetalert2';
+
+type Tab = 'hoy' | 'detallado';
 
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [CommonModule, TicketModalComponent, FormsModule, TicketDetailComponent],
+  imports: [CommonModule, FormsModule, TicketDetailComponent],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
 })
 export class TicketsComponent implements OnInit {
 
   tickets: any[] = [];
-  showModal: boolean = false;
+  tariffs: any[] = [];
   searchPlate: string = '';
-  statusFilter: string = '';
   vehicleTypeFilter: string = '';
-  showEditModal: boolean = false;
   selectedTicket: any = null;
-  previewTicket: any = null;
-  ticketToPrint: any = null;
   companyName: string = '';
-  initialPlateForModal: string = '';
+
+  activeTab: Tab = 'hoy';
+  detalladoDate: string = this.todayISODate();
 
   constructor(
     private ticketService: TicketService,
     private authService: AuthService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private tariffsService: TariffsService
   ) {}
 
   ngOnInit(): void {
@@ -45,13 +46,27 @@ export class TicketsComponent implements OnInit {
         next: (data) => this.companyName = data?.name ?? '',
         error: (err) => console.error('Error al cargar la compañía:', err)
       });
+
+      this.tariffsService.getTariffsByCompany(nit).subscribe({
+        next: (data) => this.tariffs = data ?? [],
+        error: (err) => console.error('Error al cargar tarifas:', err)
+      });
     }
+  }
+
+  private todayISODate(): string {
+    const d = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   }
 
   loadTickets(): void {
     this.ticketService.getTickets().subscribe({
       next: (data) => {
         this.tickets = data;
+        if (this.selectedTicket) {
+          this.selectedTicket = this.tickets.find((t) => t.id === this.selectedTicket.id) ?? null;
+        }
       },
       error: (error) => {
         console.error('Error al cargar tickets:', error);
@@ -59,55 +74,83 @@ export class TicketsComponent implements OnInit {
     });
   }
 
-  onTicketSaved(): void {
-    this.closeModal();
-    this.loadTickets();
-  }
-
-  onTicketUpdated(): void {
-    this.previewTicket = null;
-    this.loadTickets();
+  switchTab(tab: Tab): void {
+    this.activeTab = tab;
+    this.vehicleTypeFilter = '';
   }
 
   onSearchPlateChange(value: string): void {
     this.searchPlate = formatPlate(value);
   }
 
-  openModal(plate: string = ''): void {
-    this.initialPlateForModal = plate;
-    this.showModal = true;
-  }
-
-  closeModal(): void {
-    this.showModal = false;
-    this.initialPlateForModal = '';
-  }
-
   quickCreateFromSearch(): void {
-    this.openModal(this.searchPlate);
+    const plate = this.searchPlate;
+
+    if (!plate.trim()) {
+      Swal.fire({ icon: 'warning', title: 'Campo requerido', text: 'Ingresa la placa del vehículo' });
+      return;
+    }
+
+    if (!isValidPlate(plate)) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Placa inválida',
+        text: 'Ingresa una placa con formato válido: ABC-123 para carro o ABC-12D para moto.'
+      });
+      return;
+    }
+
+    const vehicleType = detectVehicleType(plate);
+    const tariff = this.tariffs.find((t) => t.vehicleType === vehicleType);
+
+    if (!tariff) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Tarifa no encontrada',
+        text: 'Contacta al administrador para configurar las tarifas de tu empresa'
+      });
+      return;
+    }
+
+    const ticket = {
+      vehicle: plate.toUpperCase().trim(),
+      tariff: tariff.id,
+      status: 1,
+      total: tariff.price,
+      checkInAt: new Date(),
+      email: this.authService.getEmail() ?? ''
+    };
+
+    this.ticketService.createTicket(ticket).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Ticket creado!',
+          text: `Vehículo ${ticket.vehicle} registrado correctamente`,
+          timer: 2000,
+          showConfirmButton: false
+        });
+        this.searchPlate = '';
+        this.loadTickets();
+      },
+      error: (err) => {
+        console.error('Error al crear ticket:', err);
+        Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudo crear el ticket' });
+      }
+    });
   }
 
-  openEditModal(ticket: any): void {
-    this.selectedTicket = ticket;
-    this.showEditModal = true;
+  selectTicket(ticket: any): void {
+    this.selectedTicket = this.selectedTicket?.id === ticket.id ? null : ticket;
   }
 
-  closeEditModal(): void {
-    this.showEditModal = false;
+  onTicketClosed(): void {
     this.selectedTicket = null;
+    this.loadTickets();
   }
 
-  openEditFromPreview(): void {
-    if (!this.previewTicket) return;
-    this.openEditModal(this.previewTicket);
-  }
-
-  selectPreview(ticket: any): void {
-    this.previewTicket = this.previewTicket?.id === ticket.id ? null : ticket;
-  }
-
-  closePreview(): void {
-    this.previewTicket = null;
+  toggleVehicleFilter(type: string): void {
+    this.vehicleTypeFilter = this.vehicleTypeFilter === type ? '' : type;
   }
 
   inferVehicleType(plate: string): string {
@@ -118,62 +161,54 @@ export class TicketsComponent implements OnInit {
     return vehicleLabel(detectVehicleType(plate));
   }
 
-  deleteTicket(ticket: any): void {
-    Swal.fire({
-      icon: 'warning',
-      title: '¿Eliminar ticket?',
-      text: `Esta acción eliminará el ticket de ${ticket.vehicle?.toUpperCase()} de forma permanente.`,
-      showCancelButton: true,
-      confirmButtonText: 'Eliminar',
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#dc2626'
-    }).then((result) => {
-      if (!result.isConfirmed) return;
-
-      this.ticketService.deleteTicket(ticket.id).subscribe({
-        next: () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Ticket eliminado',
-            timer: 2000,
-            showConfirmButton: false
-          });
-          if (this.previewTicket?.id === ticket.id) this.previewTicket = null;
-          this.loadTickets();
-        },
-        error: (err) => {
-          const msg = err.status === 403
-            ? 'Sin permisos para eliminar. Verifica que tu sesión esté activa.'
-            : err.status === 404
-            ? 'Ticket no encontrado en el servidor.'
-            : 'No se pudo eliminar el ticket. Intenta de nuevo.';
-          Swal.fire({ icon: 'error', title: `Error ${err.status}`, text: msg });
-        }
-      });
-    });
+  plateNoDash(plate: string): string {
+    return (plate ?? '').replace('-', '');
   }
 
-  // Imprime directamente sin abrir el modal de edición
-  printDirectly(ticket: any): void {
-    this.ticketToPrint = ticket;
-    setTimeout(() => {
-      window.print();
-      this.ticketToPrint = null;
-    }, 150);
+  private isToday(dateStr: string): boolean {
+    const d = new Date(dateStr);
+    const today = new Date();
+    return d.getFullYear() === today.getFullYear()
+      && d.getMonth() === today.getMonth()
+      && d.getDate() === today.getDate();
   }
 
-  get statusOptions(): string[] {
-    return Array.from(new Set(this.tickets.map((t) => t.status).filter(Boolean)));
+  private isOnDate(dateStr: string, isoDate: string): boolean {
+    const d = new Date(dateStr);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const formatted = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    return formatted === isoDate;
   }
 
-  get filteredTickets() {
+  /** Tickets de hoy, sin cerrar. */
+  get hoyTickets(): any[] {
+    return this.tickets.filter((t) => this.isToday(t.checkInAt) && t.status?.toLowerCase() !== 'cerrado');
+  }
+
+  /** Tickets del día seleccionado en el date picker (incluye cerrados). */
+  get detalladoTickets(): any[] {
+    return this.tickets.filter((t) => this.isOnDate(t.checkInAt, this.detalladoDate));
+  }
+
+  get baseTickets(): any[] {
+    return this.activeTab === 'hoy' ? this.hoyTickets : this.detalladoTickets;
+  }
+
+  get motoCount(): number {
+    return this.baseTickets.filter((t) => this.inferVehicleType(t.vehicle) === 'Motocicleta').length;
+  }
+
+  get carroCount(): number {
+    return this.baseTickets.filter((t) => this.inferVehicleType(t.vehicle) === 'Particular').length;
+  }
+
+  get filteredTickets(): any[] {
     const term = this.searchPlate.trim().toLowerCase();
 
-    return this.tickets.filter((ticket: any) => {
+    return this.baseTickets.filter((ticket: any) => {
       const matchesSearch = !term || ticket.vehicle?.toLowerCase().includes(term);
-      const matchesStatus = !this.statusFilter || ticket.status === this.statusFilter;
       const matchesType = !this.vehicleTypeFilter || this.inferVehicleType(ticket.vehicle) === this.vehicleTypeFilter;
-      return matchesSearch && matchesStatus && matchesType;
+      return matchesSearch && matchesType;
     });
   }
 }

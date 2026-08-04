@@ -69,11 +69,26 @@
         <div class="card-icon company"><i class="fa-solid fa-building"></i></div>
         <div>
           <h2>Mi compañía</h2>
-          <p>Puedes editar el nombre y el NIT</p>
+          <p>El estado se gestiona desde otro módulo</p>
         </div>
       </div>
 
       <ng-container *ngIf="!cargandoCompania; else loadingCompania">
+
+        <div class="form-group logo-group">
+          <label><i class="fa-solid fa-image"></i> Logo de la empresa</label>
+          <div class="logo-picker">
+            <div class="logo-preview">
+              <img *ngIf="companyLogo" [src]="companyLogo" alt="Logo de la empresa">
+              <i *ngIf="!companyLogo" class="fa-solid fa-building"></i>
+            </div>
+            <label class="btn-upload-logo">
+              <i class="fa-solid fa-upload"></i>
+              Cambiar logo
+              <input type="file" accept="image/*" (change)="onLogoSelected($event)" hidden>
+            </label>
+          </div>
+        </div>
 
         <div class="form-group">
           <label><i class="fa-solid fa-building"></i> Nombre de la compañía</label>
@@ -87,7 +102,17 @@
 
         <div class="form-group">
           <label><i class="fa-solid fa-location-dot"></i> Dirección</label>
-          <input type="text" [value]="companyAddress" disabled>
+          <input type="text" [(ngModel)]="companyAddress" placeholder="Dirección de la compañía">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-phone"></i> Teléfono</label>
+          <input type="text" [(ngModel)]="companyPhone" placeholder="Teléfono de la compañía">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-envelope"></i> Correo de la empresa</label>
+          <input type="email" [(ngModel)]="companyEmail" placeholder="contacto@empresa.com">
         </div>
 
         <div class="form-group">

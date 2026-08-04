@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TicketService } from '../../../../services/ticket.service';
 import { StatusService } from '../../../../services/status.service';
-import { formatPlate, isValidPlate } from '../utils/plate.util';
+import { detectVehicleType, vehicleLabel } from '../utils/plate.util';
 import Swal from 'sweetalert2';
+
+const PAYMENT_METHODS = ['Efectivo', 'Tarjeta', 'Nequi'];
 
 @Component({
   selector: 'app-ticket-detail',
@@ -13,102 +15,147 @@ import Swal from 'sweetalert2';
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
-export class TicketDetailComponent implements OnInit {
+export class TicketDetailComponent implements OnChanges {
 
-  @Input() ticket: any;
+  @Input() ticket: any = null;
   @Input() companyName: string = '';
-  @Output() close = new EventEmitter<void>();
+  @Input() tariffs: any[] = [];
   @Output() ticketUpdated = new EventEmitter<void>();
+  @Output() ticketClosed = new EventEmitter<void>();
 
-  editedPlate: string = '';
-  editedCheckOut: string = '';
-  editedStatus: number = 1;
-  editedTotal: number = 0;
+  selectedTariffId: number | null = null;
+  elapsedLabel: string = '';
   statusOptions: any[] = [];
 
   constructor(
     private ticketService: TicketService,
     private statusService: StatusService
-  ) {}
-
-  ngOnInit(): void {
-    this.editedPlate = this.ticket?.vehicle ?? '';
-    this.editedCheckOut = this.ticket?.checkOutAt
-      ? this.toDatetimeLocal(this.ticket.checkOutAt)
-      : '';
-    this.editedStatus = this.ticket?.statusId ?? 1;
-    this.editedTotal = this.ticket?.total ?? 0;
-
+  ) {
     this.statusService.getStatus().subscribe({
-      next: (data) => {
-        this.statusOptions = data;
-      },
-      error: () => {
-        Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudieron cargar los estados' });
-      }
+      next: (data) => this.statusOptions = data ?? [],
+      error: () => {}
     });
   }
 
-  onPlateChange(value: string): void {
-    this.editedPlate = formatPlate(value);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['ticket'] && this.ticket) {
+      this.selectedTariffId = this.ticket.tariffId ?? null;
+      this.elapsedLabel = this.computeElapsed();
+    }
   }
 
-  get selectedStatusName(): string {
-    return this.statusOptions.find(s => s.id === this.editedStatus)?.status ?? '';
+  get vehicleType(): string {
+    return detectVehicleType(this.ticket?.vehicle) ?? '';
   }
 
-  get isClosedStatus(): boolean {
-    return this.selectedStatusName.toLowerCase() === 'cerrado';
+  get vehicleTypeLabel(): string {
+    return vehicleLabel(detectVehicleType(this.ticket?.vehicle));
   }
 
-  private toDatetimeLocal(dateStr: string): string {
-    const d = new Date(dateStr);
-    const pad = (n: number) => String(n).padStart(2, '0');
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  get isClosed(): boolean {
+    return this.ticket?.status?.toLowerCase?.() === 'cerrado';
   }
 
-  saveChanges(): void {
-    if (!this.editedPlate.trim()) {
-      Swal.fire({ icon: 'warning', title: 'Campo requerido', text: 'La placa no puede estar vacía' });
+  get selectedTariff(): any {
+    return this.tariffs.find((t) => t.id === this.selectedTariffId) ?? null;
+  }
+
+  get displayTotal(): number {
+    return this.selectedTariff ? this.selectedTariff.price : (this.ticket?.total ?? 0);
+  }
+
+  private computeElapsed(): string {
+    if (!this.ticket?.checkInAt) return '---';
+    const start = new Date(this.ticket.checkInAt).getTime();
+    const end = this.ticket.checkOutAt ? new Date(this.ticket.checkOutAt).getTime() : Date.now();
+    const minutesTotal = Math.max(0, Math.floor((end - start) / 60000));
+    const hours = Math.floor(minutesTotal / 60);
+    const minutes = minutesTotal % 60;
+    return `${hours}h ${minutes}m`;
+  }
+
+  onTariffChange(): void {
+    // Solo actualiza la vista previa del total; se guarda al cerrar el ticket.
+  }
+
+  closeTicket(): void {
+    if (!this.ticket) return;
+
+    if (!this.selectedTariff) {
+      Swal.fire({ icon: 'warning', title: 'Selecciona una tarifa', text: 'Debes elegir una tarifa antes de cerrar el ticket' });
       return;
     }
 
-    if (!isValidPlate(this.editedPlate)) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Placa inválida',
-        text: 'Ingresa una placa con formato válido: ABC-123 para carro o ABC-12D para moto.'
-      });
+    const closedStatus = this.statusOptions.find((s) => s.status?.toLowerCase() === 'cerrado');
+    if (!closedStatus) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'No se encontró el estado "Cerrado" configurado' });
       return;
     }
+
+    Swal.fire({
+      icon: 'question',
+      title: '¿Cerrar ticket?',
+      text: `Se cobrará ${this.selectedTariff.price.toLocaleString('es-CO')} COP (${this.selectedTariff.vehicleType})`,
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cerrar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#7c3aed'
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+      this.askPaymentMethod();
+    });
+  }
+
+  private askPaymentMethod(): void {
+    Swal.fire({
+      icon: 'info',
+      title: 'Forma de pago',
+      input: 'radio',
+      inputOptions: PAYMENT_METHODS.reduce((acc: any, method) => {
+        acc[method] = method;
+        return acc;
+      }, {}),
+      inputValidator: (value) => (!value ? 'Selecciona una forma de pago' : undefined),
+      confirmButtonText: 'Confirmar cierre',
+      confirmButtonColor: '#7c3aed',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (!result.isConfirmed || !result.value) return;
+      this.performClose(result.value);
+    });
+  }
+
+  private performClose(paymentMethod: string): void {
+    const closedStatus = this.statusOptions.find((s) => s.status?.toLowerCase() === 'cerrado');
 
     const updated = {
-      vehicle: this.editedPlate.toUpperCase().trim(),
+      vehicle: this.ticket.vehicle,
       checkInAt: this.ticket.checkInAt,
-      checkOutAt: this.editedCheckOut ? new Date(this.editedCheckOut).toISOString() : null,
-      status: this.editedStatus,
-      total: this.editedTotal,
-      tariff: this.ticket.tariffId,
+      checkOutAt: new Date().toISOString(),
+      status: closedStatus.id,
+      total: this.selectedTariff.price,
+      tariff: this.selectedTariff.id,
+      paymentMethod
     };
 
     this.ticketService.updateTicket(this.ticket.id, updated).subscribe({
       next: () => {
         Swal.fire({
           icon: 'success',
-          title: '¡Actualizado!',
-          text: 'Ticket actualizado correctamente',
+          title: 'Ticket cerrado',
+          text: `Pago registrado: ${paymentMethod}`,
           timer: 2000,
           showConfirmButton: false
         });
-        this.ticketUpdated.emit();
-        this.closeModal();
+        this.ticketClosed.emit();
       },
       error: (err) => {
         const msg = err.status === 403
-          ? 'Sin permisos para actualizar. Verifica que tu sesión esté activa.'
+          ? 'Sin permisos para cerrar el ticket. Verifica que tu sesión esté activa.'
           : err.status === 404
           ? 'Ticket no encontrado en el servidor.'
-          : 'No se pudo actualizar el ticket. Intenta de nuevo.';
+          : 'No se pudo cerrar el ticket. Intenta de nuevo.';
         Swal.fire({ icon: 'error', title: `Error ${err.status}`, text: msg });
       }
     });
@@ -116,9 +163,5 @@ export class TicketDetailComponent implements OnInit {
 
   printTicket(): void {
     window.print();
-  }
-
-  closeModal(): void {
-    this.close.emit();
   }
 }
